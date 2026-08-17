@@ -1017,9 +1017,9 @@
             <p>基于 Node.js 22+ 与 TypeScript，一行命令即可本地启动开发模式：</p>
           </div>
           <div class="source-code-block">
-            <code>git clone https://github.com/ucmao/unisearch.git && cd unisearch/unisearch && npm install && npm run electron:dev</code>
+            <code>git clone https://github.com/ucmao/unisearch.git && cd unisearch/unisearch && npm install && npm --prefix webui install && npm run webui:build && npm run electron:dev</code>
             <button class="btn-copy-code"
-              data-copy="git clone https://github.com/ucmao/unisearch.git && cd unisearch/unisearch && npm install && npm run electron:dev">复制命令</button>
+              data-copy="git clone https://github.com/ucmao/unisearch.git && cd unisearch/unisearch && npm install && npm --prefix webui install && npm run webui:build && npm run electron:dev">复制命令</button>
           </div>
         </div>
       </div>
