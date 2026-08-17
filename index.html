@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f7f5f0">
+  <title>UniSearch — 现代化跨平台 AI 自主内容调研与数据采集工作台</title>
+  <meta name="description"
+    content="UniSearch 是一款基于 AI 的跨平台公开内容采集与深度调研桌面工作台。支持自然语言任务规划、32+ 独立平台连接器并发抓取、本地优先知识库（FTS5 + 本地向量检索）、引用式精准 RAG、实体治理与知识图谱。">
+  <meta name="keywords" content="UniSearch, AI调研, 数据采集, 爬虫工作台, 知识图谱, 本地优先, RAG, Electron, SQLite, 开源工具">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="UniSearch — 现代化跨平台 AI 自主内容调研与数据采集工作台">
+  <meta property="og:description" content="自然语言驱动，32+ 平台连接器并发采集，本地混合检索与实体图谱，数据 100% 本地留存。">
+  <meta property="og:image" content="./assets/icon.png">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="./assets/icon-circle.png">
+  <link rel="apple-touch-icon" href="./assets/icon.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+
+  <!-- 背景细腻网格与微光 -->
+  <div class="bg-grid-overlay"></div>
+
+  <!-- 顶部毛玻璃导航栏 -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-container">
+      <a href="#hero" class="brand-logo" aria-label="UniSearch 首页">
+        <img src="./assets/icon-circle.png" alt="UniSearch Logo" class="brand-icon">
+        <span class="brand-name">UniSearch</span>
+        <span class="brand-badge">v1.2 · MIT</span>
+      </a>
+
+      <nav class="main-nav" id="mainNav">
+        <a href="#features" class="nav-link">核心特性</a>
+        <a href="#connectors" class="nav-link">平台技能</a>
+        <a href="#architecture" class="nav-link">系统架构</a>
+        <a href="#download" class="nav-link">下载中心</a>
+        <a href="#faq" class="nav-link">常见问题</a>
+      </nav>
+
+      <div class="header-actions">
+        <!-- 浅色/深色模式切换 -->
+        <button class="btn-theme-toggle" id="themeToggleBtn" aria-label="切换浅色/深色模式" title="切换浅色/深色模式">
+          <span id="themeToggleIcon">🌙</span>
+        </button>
+
+        <a href="https://github.com/ucmao/unisearch" target="_blank" rel="noopener noreferrer" class="btn-star-header"
+          title="在 GitHub 上 Star 支持 UniSearch">
+          <svg class="icon-svg" viewBox="0 0 16 16" fill="currentColor">
+            <path
+              d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+          </svg>
+          <span>Star</span>
+          <span class="star-count-tag" id="headerStarBadge">⭐</span>
+        </a>
+        <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="切换菜单">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- 首屏 Hero -->
+    <section class="hero-section" id="hero">
+      <div class="hero-bg-glow"></div>
+      <div class="container hero-container">
+
+        <!-- 顶部精致药丸徽章 -->
+        <div class="hero-pill-badge">
+          <span class="pill-dot"></span>
+          <span>AI 驱动的内容调研与数据采集工作台</span>
+          <span class="pill-arrow">›</span>
+        </div>
+
+        <!-- 主标题 -->
+        <h1 class="hero-title">
+          自然语言驱动<br>
+          <span class="highlight-text">全网深度调研与数据洞察</span>
+        </h1>
+
+        <!-- 副标题（精炼克制） -->
+        <p class="hero-subtitle">
+          AI规划调研路径 · 32+平台并发抓取 · 本地优先混合RAG · 实体图谱拓扑 · 100%数据本地留存
+        </p>
+
+        <!-- CTA 按钮组 -->
+        <div class="hero-cta-group">
+          <!-- 智能下载按钮 -->
+          <div class="download-dropdown-wrapper" id="heroDownloadWrapper">
+            <a href="#download" class="btn-hero-primary" id="heroPrimaryDownloadBtn">
+              <svg class="os-icon" id="heroOsIcon" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.64-.78 1.08-1.86.96-2.95-1 .04-2.14.67-2.81 1.45-.59.68-1.11 1.77-.97 2.83 1.12.09 2.19-.55 2.82-1.33z" />
+              </svg>
+              <div class="btn-text-content">
+                <span class="btn-main-text" id="heroDownloadText">下载 macOS 版</span>
+                <span class="btn-sub-text" id="heroDownloadSubText">适用于 Apple Silicon / Intel</span>
+              </div>
+              <button type="button" class="btn-dropdown-toggle" id="heroDropdownToggle" aria-label="选择其他系统版本">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M6 9l6 6 6-6" />
+                </svg>
+              </button>
+            </a>
+
+            <!-- 下拉菜单 -->
+            <div class="download-dropdown-menu" id="heroDropdownMenu">
+              <a href="#download-mac" class="dropdown-item">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.64-.78 1.08-1.86.96-2.95-1 .04-2.14.67-2.81 1.45-.59.68-1.11 1.77-.97 2.83 1.12.09 2.19-.55 2.82-1.33z" />
+                </svg>
+                <div>
+                  <strong>macOS 客户端</strong>
+                  <span>Apple Silicon (.dmg) / Intel (.dmg)</span>
+                </div>
+              </a>
+              <a href="#download-win" class="dropdown-item">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801" />
+                </svg>
+                <div>
+                  <strong>Windows 客户端</strong>
+                  <span>64 位安装包 (.exe) / 绿色免安装版</span>
+                </div>
+              </a>
+              <a href="https://github.com/ucmao/unisearch/releases" target="_blank" rel="noopener"
+                class="dropdown-item">
+                <svg viewBox="0 0 16 16" fill="currentColor">
+                  <path
+                    d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                </svg>
+                <div>
+                  <strong>GitHub Releases</strong>
+                  <span>查看全部版本与更新日志</span>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <!-- GitHub Star 按钮 -->
+          <a href="https://github.com/ucmao/unisearch" target="_blank" rel="noopener noreferrer"
+            class="btn-hero-secondary">
+            <svg class="github-icon" viewBox="0 0 16 16" fill="currentColor">
+              <path
+                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+            </svg>
+            <span>GitHub Star</span>
+            <span class="star-icon">⭐</span>
+          </a>
+        </div>
+
+        <!-- 极简核心指标条 -->
+        <div class="hero-features-bar">
+          <div class="feature-tag-item">
+            <span class="tag-icon">🔌</span>
+            <span>32+ 独立连接器</span>
+          </div>
+          <div class="feature-tag-item">
+            <span class="tag-icon">🎯</span>
+            <span>7 大内置业务技能</span>
+          </div>
+          <div class="feature-tag-item">
+            <span class="tag-icon">🧠</span>
+            <span>FTS5 + 向量混合检索</span>
+          </div>
+          <div class="feature-tag-item">
+            <span class="tag-icon">🕸️</span>
+            <span>实体治理与图谱</span>
+          </div>
+          <div class="feature-tag-item">
+            <span class="tag-icon">🔒</span>
+            <span>100% 数据本地留存</span>
+          </div>
+          <div class="feature-tag-item">
+            <span class="tag-icon">📄</span>
+            <span>MIT 自由开源</span>
+          </div>
+        </div>
+
+        <!-- 产品界面窗口预览 -->
+        <div class="hero-showcase-window">
+          <img class="hero-product-screenshot" src="./assets/hero-real-workspace.png"
+            alt="UniSearch 真实产品界面：输入调研诉求，AI 规划路径并执行数据抓取与图谱分析" width="1280" height="720" decoding="async"
+            fetchpriority="high">
+          <span class="real-ui-badge">UniSearch 工作台实机界面</span>
+          <div class="window-header">
+            <div class="mac-controls">
+              <span class="ctrl-dot dot-red"></span>
+              <span class="ctrl-dot dot-yellow"></span>
+              <span class="ctrl-dot dot-green"></span>
+            </div>
+            <div class="window-title-bar">
+              <img src="./assets/icon-circle.png" alt="" class="win-logo-mini">
+              <span>UniSearch Studio · AI 深度调研</span>
+            </div>
+            <div class="window-actions-dummy">
+              <span class="pet-mini-badge">🐾 Codex Pet 就绪</span>
+              <span class="dummy-status">🟢 服务正常运行</span>
+            </div>
+          </div>
+
+          <div class="window-body">
+            <!-- 模拟顶部 Prompt 输入区 -->
+            <div class="mockup-search-container">
+              <div class="mockup-search-icon">🔍</div>
+              <div class="mockup-search-input">
+                <span class="typing-text">深度调研新能源汽车固态电池量产进展、用户反馈并生成技术拓扑图谱</span>
+                <span class="cursor-blink">|</span>
+              </div>
+              <button class="mockup-search-btn">
+                <span>AI 规划并执行</span>
+                <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14">
+                  <path fill-rule="evenodd"
+                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                    clip-rule="evenodd" />
+                </svg>
+              </button>
+            </div>
+
+            <!-- 模拟任务流转工作卡片 -->
+            <div class="mockup-cards-grid">
+              <!-- 卡片 1: AI 意图拆解与增量工作流 -->
+              <div class="mock-card">
+                <div class="mock-card-head">
+                  <span class="badge-blue">意图解析与任务编排</span>
+                  <span class="card-time">增量模式</span>
+                </div>
+                <div class="mock-chip-list">
+                  <span class="chip">🎯 固态电池 商业化进展</span>
+                  <span class="chip">🎯 宁德时代 · 卫蓝 · 埃安</span>
+                  <span class="chip">🎯 质量门禁: 置信度 ≥ 0.85</span>
+                </div>
+              </div>
+
+              <!-- 卡片 2: 实时连接器并发 -->
+              <div class="mock-card">
+                <div class="mock-card-head">
+                  <span class="badge-green">多平台并发采集</span>
+                  <span class="card-speed">⚡ 32.6 条/秒</span>
+                </div>
+                <div class="connector-progress-list">
+                  <div class="conn-prog-row">
+                    <span class="conn-name">小红书</span>
+                    <div class="prog-bar">
+                      <div class="prog-fill" style="width: 88%;"></div>
+                    </div>
+                    <span class="conn-num">48 笔记</span>
+                  </div>
+                  <div class="conn-prog-row">
+                    <span class="conn-name">哔哩哔哩</span>
+                    <div class="prog-bar">
+                      <div class="prog-fill" style="width: 100%;"></div>
+                    </div>
+                    <span class="conn-num">完成 (320 评)</span>
+                  </div>
+                  <div class="conn-prog-row">
+                    <span class="conn-name">arXiv 论文库</span>
+                    <div class="prog-bar">
+                      <div class="prog-fill" style="width: 75%;"></div>
+                    </div>
+                    <span class="conn-num">16 篇文献</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 卡片 3: 研究图谱与分析 -->
+              <div class="mock-card">
+                <div class="mock-card-head">
+                  <span class="badge-purple">实体图谱与洞察</span>
+                  <span class="card-status">12 个实体节点</span>
+                </div>
+                <div class="mock-summary-text">
+                  📊 <strong>实体关系提炼</strong>：抽取固态电解质、能量密度、低温衰减等 12 项实体关系，并生成多版本对比洞察。
+                </div>
+                <div class="mock-graph-preview">
+                  <span class="graph-tag">⚯ 宁德时代 ↔ 凝聚态电池</span>
+                  <span class="graph-tag">⚯ 续航达成率 ↔ 低温测试</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 32 独立信源与 7 大业务技能矩阵 -->
+    <section class="connectors-section" id="connectors">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag">CONNECTORS & SKILLS</span>
+          <h2 class="section-title">32 平台独立连接器与 7 大内置技能</h2>
+          <p class="section-subtitle">全平台独立适配，支持多引擎并发调度与自然语言工作流编排</p>
+        </div>
+
+        <!-- 搜索与分类 Tab 过滤栏 -->
+        <div class="connectors-controls-bar">
+          <div class="connector-search-box">
+            <svg class="search-icon" viewBox="0 0 24 24">
+              <path
+                d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+            </svg>
+            <input type="text" class="connector-search-input" id="connectorSearchInput"
+              placeholder="搜索信源平台或技能 (如: 小红书, DeepSeek, 36氪, 薪酬调研, 百度, BOSS直聘...)" autocomplete="off">
+            <button class="connector-search-clear" id="connectorSearchClear" aria-label="清空搜索">✕</button>
+          </div>
+
+          <div class="connector-tabs" id="connectorTabs">
+            <button class="conn-tab active" data-category="all">全部生态 (39)</button>
+            <button class="conn-tab" data-category="social">社交自媒体 (7)</button>
+            <button class="conn-tab" data-category="ai">AI 网页问答 (7)</button>
+            <button class="conn-tab" data-category="search">全网搜索引擎 (7)</button>
+            <button class="conn-tab" data-category="academic">科技与商业资讯 (4)</button>
+            <button class="conn-tab" data-category="vertical">垂直招聘与维权 (5)</button>
+            <button class="conn-tab" data-category="utility">实用解析工具 (2)</button>
+            <button class="conn-tab" data-category="skills">内置业务技能 (7)</button>
+          </div>
+        </div>
+
+        <!-- 32 连接器 + 7 技能卡片网格 -->
+        <div class="connectors-grid" id="connectorsGrid">
+
+          <!-- 1. 社交自媒体 (7) -->
+          <div class="conn-card" data-cat="social" data-keywords="小红书 图文 笔记 评论 创作者 搜索 社交">
+            <div class="conn-icon-box bg-red-light"><img src="./assets/logos/xiaohongshu_logo.png" alt="小红书"
+                onerror="this.src='./assets/icon-circle.png'"></div>
+            <div class="conn-info">
+              <h3>小红书</h3>
+              <p>图文笔记、视频、楼中楼评论与作者主页</p>
+            </div>
+            <span class="conn-badge">扫码持久化</span>
+          </div>
+
+          <div class="conn-card" data-cat="social" data-keywords="抖音 短视频 创作者 评论 社交 互动">
+            <div class="conn-icon-box bg-dark-light"><img src="./assets/logos/douyin.png" alt="抖音"
+                onerror="this.src='./assets/icon-circle.png'"></div>
+            <div class="conn-info">
+              <h3>抖音</h3>
+              <p>短视频详情、创作者动态与热评穿透</p>
+            </div>
+            <span class="conn-badge">扫码持久化</span>
+          </div>
+
+          <div class="conn-card" data-cat="social" data-keywords="快手 短视频 评论 社交 创作者">
+            <div class="conn-icon-box bg-orange-light"><span class="text-icon">快</span></div>
+            <div class="conn-info">
+              <h3>快手</h3>
+              <p>短视频内容检索与作品互动评论采集</p>
+            </div>
+            <span class="conn-badge">扫码持久化</span>
+          </div>
+
+          <div class="conn-card" data-cat="social" data-keywords="哔哩哔哩 b站 视频 弹幕 评论区 置顶 热评 社交">
+            <div class="conn-icon-box bg-pink-light"><img src="./assets/logos/bilibili_logo.png" alt="哔哩哔哩"
+                onerror="this.src='./assets/icon-circle.png'"></div>
+            <div class="conn-info">
+              <h3>哔哩哔哩</h3>
+              <p>视频/专栏搜索、播放投币数据与全量评论</p>
+            </div>
+            <span class="conn-badge">扫码持久化</span>
+          </div>
+
+          <div class="conn-card" data-cat="social" data-keywords="微博 实时 热搜 博文 正文 转发 舆情 互动">
+            <div class="conn-icon-box bg-red-light"><span class="text-icon">微</span></div>
+            <div class="conn-info">
+              <h3>微博</h3>
+              <p>实时热搜、关键词博文正文与转发互动</p>
+            </div>
+            <span class="conn-badge">扫码持久化</span>
+          </div>
+
+          <div class="conn-card" data-cat="social" data-keywords="百度贴吧 贴吧 论坛 楼中楼 舆情 帖子 回复">
+            <div class="conn-icon-box bg-blue-light"><span class="text-icon">贴</span></div>
+            <div class="conn-info">
+              <h3>百度贴吧</h3>
+              <p>主题帖内容、楼层回复与吧内舆情检索</p>
+            </div>
+            <span class="conn-badge">扫码持久化</span>
+          </div>
+
+          <div class="conn-card" data-cat="social" data-keywords="知乎 问答 专栏 高赞 回答 深度 讨论">
+            <div class="conn-icon-box bg-blue-light"><span class="text-icon">知</span></div>
+            <div class="conn-info">
+              <h3>知乎</h3>
+              <p>问答深度内容、长篇专栏与高赞回答采集</p>
+            </div>
+            <span class="conn-badge">扫码持久化</span>
+          </div>
+
+          <!-- 2. AI 网页问答 (7) -->
+          <div class="conn-card" data-cat="ai" data-keywords="deepseek 深度求索 ai 问答 搜索 推理 思考过程">
+            <div class="conn-icon-box bg-blue-light"><span class="text-icon">DS</span></div>
+            <div class="conn-info">
+              <h3>DeepSeek</h3>
+              <p>网页问答模拟、深度思考链（Reasoning）与引用</p>
+            </div>
+            <span class="conn-badge badge-ai">免登 / 账号</span>
+          </div>
+
+          <div class="conn-card" data-cat="ai" data-keywords="kimi 月之暗面 长文本 联网 搜索 ai 智能助手">
+            <div class="conn-icon-box bg-dark-light"><span class="text-icon">Ki</span></div>
+            <div class="conn-info">
+              <h3>Kimi</h3>
+              <p>长文本问答模拟与实时联网搜索引用提取</p>
+            </div>
+            <span class="conn-badge badge-ai">免登 / 账号</span>
+          </div>
+
+          <div class="conn-card" data-cat="ai" data-keywords="豆包 字节跳动 ai 对话 多模态 问答 助手">
+            <div class="conn-icon-box bg-blue-light"><span class="text-icon">豆</span></div>
+            <div class="conn-info">
+              <h3>字节跳动 豆包</h3>
+              <p>AI 对话交互、联网参考来源与正文提取</p>
+            </div>
+            <span class="conn-badge badge-ai">免登 / 账号</span>
+          </div>
+
+          <div class="conn-card" data-cat="ai" data-keywords="通义千问 阿里 搜索 复杂任务 分析 ai 智能">
+            <div class="conn-icon-box bg-purple-light"><span class="text-icon">通</span></div>
+            <div class="conn-info">
+              <h3>阿里 通义千问</h3>
+              <p>问答模拟、结构化观点与参考依据采集</p>
+            </div>
+            <span class="conn-badge badge-ai">免登 / 账号</span>
+          </div>
+
+          <div class="conn-card" data-cat="ai" data-keywords="腾讯元宝 元宝 腾讯 ai 搜索 资料 引用">
+            <div class="conn-icon-box bg-green-light"><span class="text-icon">元</span></div>
+            <div class="conn-info">
+              <h3>腾讯元宝</h3>
+              <p>智能问答搜索与微信生态参考信源解析</p>
+            </div>
+            <span class="conn-badge badge-ai">免登 / 账号</span>
+          </div>
+
+          <div class="conn-card" data-cat="ai" data-keywords="纳米ai 纳米 结构化 生成 智能 搜索">
+            <div class="conn-icon-box bg-cyan-light"><span class="text-icon">纳</span></div>
+            <div class="conn-info">
+              <h3>纳米 AI</h3>
+              <p>多信源问答对比与学术权威引用沉淀</p>
+            </div>
+            <span class="conn-badge badge-ai">免登 / 账号</span>
+          </div>
+
+          <div class="conn-card" data-cat="ai" data-keywords="文心一言 百度 知识问答 对话 分析 企业级">
+            <div class="conn-icon-box bg-blue-light"><span class="text-icon">言</span></div>
+            <div class="conn-info">
+              <h3>百度 文心一言</h3>
+              <p>问答交互、联网参考资料与思考逻辑抓取</p>
+            </div>
+            <span class="conn-badge badge-ai">免登 / 账号</span>
+          </div>
+
+          <!-- 3. 全网搜索引擎 (7) -->
+          <div class="conn-card" data-cat="search" data-keywords="百度 百度搜索 网页 搜索 资讯 新闻 搜索引擎">
+            <div class="conn-icon-box bg-blue-light"><span class="text-icon">百</span></div>
+            <div class="conn-info">
+              <h3>百度搜索</h3>
+              <p>全网网页检索、SERP 排名与落地页提取</p>
+            </div>
+            <span class="conn-badge">HTTP 并发</span>
+          </div>
+
+          <div class="conn-card" data-cat="search" data-keywords="必应 必应搜索 微软 全球 英文 网页 搜索引擎">
+            <div class="conn-icon-box bg-cyan-light"><span class="text-icon">必</span></div>
+            <div class="conn-info">
+              <h3>必应搜索</h3>
+              <p>国内外高质量网页摘要与落地页提取</p>
+            </div>
+            <span class="conn-badge">免登录</span>
+          </div>
+
+          <div class="conn-card" data-cat="search" data-keywords="360 360搜索 网页 搜索 快照 摘要 引擎">
+            <div class="conn-icon-box bg-green-light"><span class="text-icon">360</span></div>
+            <div class="conn-info">
+              <h3>360 搜索</h3>
+              <p>中文网页检索、结果排名与摘要高速并发</p>
+            </div>
+            <span class="conn-badge">HTTP 并发</span>
+          </div>
+
+          <div class="conn-card" data-cat="search" data-keywords="搜狗 搜狗搜索 微信 引擎 网页 长尾 资讯">
+            <div class="conn-icon-box bg-orange-light"><span class="text-icon">搜</span></div>
+            <div class="conn-info">
+              <h3>搜狗搜索</h3>
+              <p>全网网页与微信特色长尾内容发现</p>
+            </div>
+            <span class="conn-badge">HTTP 并发</span>
+          </div>
+
+          <div class="conn-card" data-cat="search" data-keywords="头条 头条搜索 字节 今日头条 资讯 热点 事件">
+            <div class="conn-icon-box bg-red-light"><span class="text-icon">头</span></div>
+            <div class="conn-info">
+              <h3>头条搜索</h3>
+              <p>全网资讯聚合与突发热点事件检索</p>
+            </div>
+            <span class="conn-badge">免登录</span>
+          </div>
+
+          <div class="conn-card" data-cat="search" data-keywords="神马 神马搜索 夸克 阿里 移动 网页搜索 百科">
+            <div class="conn-icon-box bg-orange-light"><span class="text-icon">神</span></div>
+            <div class="conn-info">
+              <h3>神马搜索</h3>
+              <p>移动端全网视角搜索与即时摘要提取</p>
+            </div>
+            <span class="conn-badge">免登录</span>
+          </div>
+
+          <div class="conn-card" data-cat="search" data-keywords="中国搜索 国搜 权威 官方 政策 新闻 资讯">
+            <div class="conn-icon-box bg-red-light"><span class="text-icon">国</span></div>
+            <div class="conn-info">
+              <h3>中国搜索</h3>
+              <p>国家级权威信源与政策资讯定向检索</p>
+            </div>
+            <span class="conn-badge">免登录</span>
+          </div>
+
+          <!-- 4. 科技与商业资讯 (4) -->
+          <div class="conn-card" data-cat="academic" data-keywords="36氪 36kr 商业 创投 融资 科技 资讯 快讯 热榜 研报 特稿 创业 竞品">
+            <div class="conn-icon-box bg-blue-light"><span class="text-icon">36氪</span></div>
+            <div class="conn-info">
+              <h3>36氪</h3>
+              <p>商业特稿深度报道、投融资事件与快讯</p>
+            </div>
+            <span class="conn-badge">官方 API</span>
+          </div>
+
+          <div class="conn-card" data-cat="academic" data-keywords="arxiv 论文 学术 计算机 ai 预印本 pdf 摘要">
+            <div class="conn-icon-box bg-red-light"><span class="text-icon">论文</span></div>
+            <div class="conn-info">
+              <h3>arXiv 论文库</h3>
+              <p>国际预印本论文检索、摘要、分类与 PDF 链接</p>
+            </div>
+            <span class="conn-badge">官方 API</span>
+          </div>
+
+          <div class="conn-card" data-cat="academic" data-keywords="github 开源 代码 仓库 readme release 趋势 追踪">
+            <div class="conn-icon-box bg-dark-light"><img src="./assets/logos/github.png" alt="GitHub"
+                onerror="this.src='./assets/icon-circle.png'"></div>
+            <div class="conn-info">
+              <h3>GitHub 仓库</h3>
+              <p>开源项目搜索、Stars 趋势与 Readme 元数据</p>
+            </div>
+            <span class="conn-badge">官方 API</span>
+          </div>
+
+          <div class="conn-card" data-cat="academic" data-keywords="ai hot 热榜 资讯 行业 热点 日报 时间线">
+            <div class="conn-icon-box bg-orange-light"><span class="text-icon">资讯</span></div>
+            <div class="conn-info">
+              <h3>AI HOT 资讯</h3>
+              <p>全网 AI 突发热点、大模型动态与精选日报</p>
+            </div>
+            <span class="conn-badge">官方 API</span>
+          </div>
+
+          <!-- 5. 垂直招聘与维权 (5) -->
+          <div class="conn-card" data-cat="vertical" data-keywords="智联 智联招聘 招聘 岗位 薪资 职位 jd 人才">
+            <div class="conn-icon-box bg-blue-light"><span class="text-icon">智联</span></div>
+            <div class="conn-info">
+              <h3>智联招聘</h3>
+              <p>岗位关键词检索、薪资城市过滤与详细 JD</p>
+            </div>
+            <span class="conn-badge">免登 / 账号</span>
+          </div>
+
+          <div class="conn-card" data-cat="vertical" data-keywords="前程无忧 51job 招聘 职位 岗位 薪酬 用人">
+            <div class="conn-icon-box bg-orange-light"><span class="text-icon">前程</span></div>
+            <div class="conn-info">
+              <h3>前程无忧</h3>
+              <p>职位列表检索、薪资范围与公司要求解析</p>
+            </div>
+            <span class="conn-badge">免登 / 账号</span>
+          </div>
+
+          <div class="conn-card" data-cat="vertical" data-keywords="猎聘 猎聘网 高端 人才 岗位 年薪 企业画像">
+            <div class="conn-icon-box bg-purple-light"><span class="text-icon">猎聘</span></div>
+            <div class="conn-info">
+              <h3>猎聘网</h3>
+              <p>中高端人才职位、年薪范围与企业画像</p>
+            </div>
+            <span class="conn-badge">免登 / 账号</span>
+          </div>
+
+          <div class="conn-card" data-cat="vertical" data-keywords="boss boss直聘 直聘 招聘 岗位 薪资 技能 用人">
+            <div class="conn-icon-box bg-cyan-light"><span class="text-icon">直聘</span></div>
+            <div class="conn-info">
+              <h3>BOSS直聘</h3>
+              <p>岗位详情、技能标签与团队规模解析</p>
+            </div>
+            <span class="conn-badge">合规采集</span>
+          </div>
+
+          <div class="conn-card" data-cat="vertical" data-keywords="黑猫 黑猫投诉 消费 舆情 口碑 投诉 维权 回复">
+            <div class="conn-icon-box bg-dark-light"><span class="text-icon">黑猫</span></div>
+            <div class="conn-info">
+              <h3>黑猫投诉</h3>
+              <p>维权投诉事件、涉诉金额、处理进度与回复</p>
+            </div>
+            <span class="conn-badge">公开数据</span>
+          </div>
+
+          <!-- 6. 实用工具与解析 (2) -->
+          <div class="conn-card" data-cat="utility" data-keywords="通用网页 阅读器 web reader 正文 提取 文章 链接">
+            <div class="conn-icon-box bg-green-light"><span class="text-icon">阅读</span></div>
+            <div class="conn-info">
+              <h3>通用网页阅读器</h3>
+              <p>任意 HTTP/HTTPS 链接正文抽取与多媒体清洗</p>
+            </div>
+            <span class="conn-badge">混合引擎</span>
+          </div>
+
+          <div class="conn-card" data-cat="utility" data-keywords="无水印 解析 视频 图片 原图 高清 下载 实况 短链">
+            <div class="conn-icon-box bg-orange-light"><span class="text-icon">解析</span></div>
+            <div class="conn-info">
+              <h3>综合无水印解析</h3>
+              <p>30+ 平台原画高清视频、图集与音轨无损解析</p>
+            </div>
+            <span class="conn-badge">极速 API</span>
+          </div>
+
+          <!-- 7. 内置业务技能预设 (7) -->
+          <div class="conn-card" data-cat="skills" data-keywords="销售 课程 竞争 情报 竞品 价格 营销 顾虑 调研">
+            <div class="conn-icon-box bg-purple-light"><span class="text-icon">💼</span></div>
+            <div class="conn-info">
+              <h3>销售课程竞争情报</h3>
+              <p>竞品定价、营销策略、客户顾虑挖掘与话术建议</p>
+            </div>
+            <span class="conn-badge badge-ai">内置技能</span>
+          </div>
+
+          <div class="conn-card" data-cat="skills" data-keywords="新媒体 内容 调研 爆款 对标 互动 选题 评论">
+            <div class="conn-icon-box bg-red-light"><span class="text-icon">📊</span></div>
+            <div class="conn-info">
+              <h3>新媒体内容调研</h3>
+              <p>爆款选题发现、对标账号拆解与高赞表达洞察</p>
+            </div>
+            <span class="conn-badge badge-ai">内置技能</span>
+          </div>
+
+          <div class="conn-card" data-cat="skills" data-keywords="品牌 geo 风险 监测 ai 问答 负面 舆情 投诉">
+            <div class="conn-icon-box bg-blue-light"><span class="text-icon">🛡️</span></div>
+            <div class="conn-info">
+              <h3>品牌GEO与风险监测</h3>
+              <p>7大 AI 问答平台品牌可见性与投诉舆情预警</p>
+            </div>
+            <span class="conn-badge badge-ai">内置技能</span>
+          </div>
+
+          <div class="conn-card" data-cat="skills" data-keywords="招聘 岗位 薪酬 调研 基准 城市 经验 学历 定价">
+            <div class="conn-icon-box bg-cyan-light"><span class="text-icon">💰</span></div>
+            <div class="conn-info">
+              <h3>招聘岗位薪酬调研</h3>
+              <p>行业薪资基准线、城市梯队与任职资格要求测算</p>
+            </div>
+            <span class="conn-badge badge-ai">内置技能</span>
+          </div>
+
+          <div class="conn-card" data-cat="skills" data-keywords="网页 聚合 全网 搜索 翻页 正文 阅读">
+            <div class="conn-icon-box bg-green-light"><span class="text-icon">🌐</span></div>
+            <div class="conn-info">
+              <h3>网页聚合全网搜索</h3>
+              <p>主流引擎多词并行检索、深度翻页与正文阅读</p>
+            </div>
+            <span class="conn-badge badge-ai">内置技能</span>
+          </div>
+
+          <div class="conn-card" data-cat="skills" data-keywords="创作者 主页 采集 批量 历史 动态 作品 社交">
+            <div class="conn-icon-box bg-dark-light"><span class="text-icon">👥</span></div>
+            <div class="conn-info">
+              <h3>创作者主页全量采集</h3>
+              <p>指定创作者作品批量抓取、互动复盘与回帖跟踪</p>
+            </div>
+            <span class="conn-badge badge-ai">内置技能</span>
+          </div>
+
+          <div class="conn-card" data-cat="skills" data-keywords="媒体 语音 转写 知识 文档 音频 知识库 索引 无水印 解析">
+            <div class="conn-icon-box bg-orange-light"><span class="text-icon">🎬</span></div>
+            <div class="conn-info">
+              <h3>全网综合无水印解析</h3>
+              <p>30+ 平台音视频与图集原画解析，提取高清素材</p>
+            </div>
+            <span class="conn-badge badge-ai">内置技能</span>
+          </div>
+
+          <!-- 无匹配提示 -->
+          <div class="no-results-message" id="noResultsMessage">
+            <span>未找到匹配的信源或技能，请尝试其他关键词</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 核心特性 Bento Grid -->
+    <section class="features-section" id="features">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag">CORE CAPABILITIES</span>
+          <h2 class="section-title">为专业调研打造的六大硬核系统</h2>
+          <p class="section-subtitle">从意图解析、实体治理到本地混合 RAG，构建完整调研闭环</p>
+        </div>
+
+        <div class="bento-grid">
+          <!-- Bento 1: AI 自主规划与增量调度 -->
+          <div class="bento-card bento-col-2">
+            <div class="bento-badge">Agent & Incremental Planning</div>
+            <h3 class="bento-title">AI 自主任务规划与增量调度</h3>
+            <p class="bento-desc">
+              自然语言输入调研诉求，Agent 自主规划采集路径与信源组合。支持增量迭代采集与多次研报并排比对，自动追踪舆情与事实演进。
+            </p>
+            <div class="bento-visual visual-workflow-demo">
+              <div class="flow-step">
+                <span class="step-num">1</span>
+                <span>自然语言诉求</span>
+              </div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-step">
+                <span class="step-num">2</span>
+                <span>多源增量抓取</span>
+              </div>
+              <div class="flow-arrow">→</div>
+              <div class="flow-step">
+                <span class="step-num">3</span>
+                <span>版本对比研报</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bento 2: 本地混合知识库与引用式 RAG -->
+          <div class="bento-card">
+            <div class="bento-badge">Local-First RAG</div>
+            <h3 class="bento-title">本地混合知识库与精准 RAG</h3>
+            <p class="bento-desc">
+              SQLite FTS5 全文索引与本地向量检索深度融合，回答逐句标注原始信源出处与命中段落。
+            </p>
+            <ul class="bento-feature-list">
+              <li>🔍 关键词 + 语义混合召回</li>
+              <li>📌 逐句事实证据精确溯源</li>
+              <li>🔒 知识索引 100% 存储于本地</li>
+            </ul>
+          </div>
+
+          <!-- Bento 3: 实体治理与知识图谱 -->
+          <div class="bento-card">
+            <div class="bento-badge">Entity Graph</div>
+            <h3 class="bento-title">实体治理与拓扑图谱</h3>
+            <p class="bento-desc">
+              自动抽取公司、产品、人物等核心实体，支持相似实体一键归并、多义拆分与力导向拓扑呈现。
+            </p>
+            <ul class="bento-feature-list">
+              <li>🕸️ 力导向动态拓扑关系图</li>
+              <li>🔗 实体自动抽取与归并拆分</li>
+              <li>🎯 节点穿透关联原始文档证据</li>
+            </ul>
+          </div>
+
+          <!-- Bento 4: 数据质量门禁与进程沙箱 -->
+          <div class="bento-card">
+            <div class="bento-badge">Sandbox & Quality Gate</div>
+            <h3 class="bento-title">子进程沙箱与质量门禁</h3>
+            <p class="bento-desc">
+              Node.js 子进程沙箱隔离运行，界面始终丝滑流畅。内置置信度门禁与自动去重，确保入库数据真实有效。
+            </p>
+            <div class="bento-tag-cloud">
+              <span class="tech-tag">多 Worker 进程隔离</span>
+              <span class="tech-tag">置信度门禁评分</span>
+              <span class="tech-tag">异常自动熔断恢复</span>
+            </div>
+          </div>
+
+          <!-- Bento 5: 认证沙箱与桌面伴侣 -->
+          <div class="bento-card">
+            <div class="bento-badge">Session & Codex Pet</div>
+            <h3 class="bento-title">内置会话沙箱与伴侣交互</h3>
+            <p class="bento-desc">
+              内置隔离 Chromium 浏览器扫码登录，Cookie 本地持久化；Codex Pet 桌面伴侣实时联动任务进度。
+            </p>
+            <div class="bento-tag-cloud">
+              <span class="tech-tag">扫码登录免重复认证</span>
+              <span class="tech-tag">人机挑战可视化交互</span>
+              <span class="tech-tag">Codex Pet 状态联动</span>
+            </div>
+          </div>
+
+          <!-- Bento 6: 多维数据透视与资产导出 -->
+          <div class="bento-card bento-col-2">
+            <div class="bento-badge">Workbench & Exporters</div>
+            <h3 class="bento-title">多维数据透视与全格式资产沉淀</h3>
+            <p class="bento-desc">
+              支持按信源、时间、作者、互动量灵活筛选聚合。采集成果一键导出为 Excel、Word、PDF、Markdown、JSON、CSV、Obsidian 及 IMA 等标准格式。
+            </p>
+            <div class="export-logos-row">
+              <div class="export-item"><img src="./assets/logos/exporter_obsidian.png" alt="Obsidian"
+                  onerror="this.src='./assets/icon-circle.png'"><span>Obsidian</span></div>
+              <div class="export-item"><img src="./assets/logos/exporter_notion.png" alt="Notion"
+                  onerror="this.src='./assets/icon-circle.png'"><span>Notion</span></div>
+              <div class="export-item"><img src="./assets/logos/exporter_dify.png" alt="Dify"
+                  onerror="this.src='./assets/icon-circle.png'"><span>Dify</span></div>
+              <div class="export-item"><img src="./assets/logos/exporter_logseq.png" alt="Logseq"
+                  onerror="this.src='./assets/icon-circle.png'"><span>Logseq</span></div>
+              <div class="export-item"><img src="./assets/logos/exporter_lark.png" alt="飞书"
+                  onerror="this.src='./assets/icon-circle.png'"><span>飞书文档</span></div>
+              <div class="export-item"><img src="./assets/logos/exporter_yuque.png" alt="语雀"
+                  onerror="this.src='./assets/icon-circle.png'"><span>语雀</span></div>
+              <div class="export-item"><img src="./assets/logos/exporter_ima.png" alt="IMA"
+                  onerror="this.src='./assets/icon-circle.png'"><span>IMA</span></div>
+              <div class="export-item"><img src="./assets/logos/exporter_markdown.png" alt="Markdown"
+                  onerror="this.src='./assets/icon-circle.png'"><span>Excel / PDF</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 系统架构解析 -->
+    <section class="architecture-section" id="architecture">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag">SYSTEM ARCHITECTURE</span>
+          <h2 class="section-title">本地优先与进程隔离的高可用架构</h2>
+          <p class="section-subtitle">基于 Electron + TypeScript + Fastify + React 构建，前后端解耦与子进程沙箱隔离</p>
+        </div>
+
+        <div class="arch-card-wrapper">
+          <div class="arch-flow-grid">
+            <div class="arch-step-card">
+              <div class="arch-step-head">
+                <span class="arch-num">01</span>
+                <h4>交互与展现层</h4>
+              </div>
+              <p>React 18 工作台、Codex Pet 伴侣、数据透视与力导向关系图谱。</p>
+            </div>
+
+            <div class="arch-step-card">
+              <div class="arch-step-head">
+                <span class="arch-num">02</span>
+                <h4>本地服务与 Agent</h4>
+              </div>
+              <p>Fastify REST / WS 流、意图解析规划、技能注册表与工作流引擎。</p>
+            </div>
+
+            <div class="arch-step-card">
+              <div class="arch-step-head">
+                <span class="arch-num">03</span>
+                <h4>沙箱隔离执行层</h4>
+              </div>
+              <p>Crawler Worker（HTTP / Playwright / CDP）与 Processor Worker 多进程调度。</p>
+            </div>
+
+            <div class="arch-step-card">
+              <div class="arch-step-head">
+                <span class="arch-num">04</span>
+                <h4>本地知识与资产</h4>
+              </div>
+              <p>SQLite FTS5 全文索引、本地向量检索、引用式 RAG 与多格式导出。</p>
+            </div>
+          </div>
+
+          <div class="arch-summary-banner">
+            <div class="summary-item">
+              <strong>🔒 100% 数据本地留存</strong>
+              <span>数据、知识库索引与登录态仅保留在本地设备，零云端上传</span>
+            </div>
+            <div class="summary-item">
+              <strong>⚡ 混合引擎高并发</strong>
+              <span>免登录走 HTTP 极速并发，动态页面走 Playwright，挑战走 CDP 桥接</span>
+            </div>
+            <div class="summary-item">
+              <strong>🤖 主流大模型全兼容</strong>
+              <span>支持接入 DeepSeek、MiniMax 及任意 OpenAI 标准 API / 本地模型</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 下载中心 -->
+    <section class="download-section" id="download">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag">DOWNLOAD CENTER</span>
+          <h2 class="section-title">获取 UniSearch 客户端</h2>
+          <p class="section-subtitle">免费开源 · 纯净无广告 · 选择适配您操作系统的版本</p>
+        </div>
+
+        <div class="download-cards-container">
+          <!-- macOS 下载卡片 -->
+          <div class="download-platform-card" id="download-mac">
+            <div class="platform-card-header">
+              <div class="platform-icon-box">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.64-.78 1.08-1.86.96-2.95-1 .04-2.14.67-2.81 1.45-.59.68-1.11 1.77-.97 2.83 1.12.09 2.19-.55 2.82-1.33z" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="platform-name">macOS 客户端</h3>
+                <span class="platform-ver">适用于 macOS 11.0 及更高版本</span>
+              </div>
+            </div>
+
+            <div class="platform-card-body">
+              <div class="arch-selector">
+                <div class="arch-option">
+                  <span class="arch-title">🍎 Apple Silicon 版</span>
+                  <span class="arch-desc">适用于 M 系列全系芯片 (M1 及以上)</span>
+                </div>
+                <div class="arch-option">
+                  <span class="arch-title">💻 Intel 芯片版</span>
+                  <span class="arch-desc">适用于 Intel 架构 Mac</span>
+                </div>
+              </div>
+
+              <div class="download-action-list">
+                <a href="https://github.com/ucmao/unisearch/releases" target="_blank" rel="noopener"
+                  class="btn-download-channel btn-channel-github">
+                  <svg viewBox="0 0 16 16" fill="currentColor">
+                    <path
+                      d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                  </svg>
+                  <span>GitHub Releases 官方下载 (.dmg)</span>
+                </a>
+
+                <a href="https://github.com/ucmao/unisearch/releases" target="_blank" rel="noopener"
+                  class="btn-download-channel btn-channel-mirror">
+                  <span class="mirror-icon">🚀</span>
+                  <span>国内高速镜像 / 网盘下载</span>
+                </a>
+              </div>
+
+              <div class="install-tips-box">
+                <div class="tips-head">💡 <strong>macOS 首次运行提示</strong>：</div>
+                <p>若提示“已损坏”或“未受信任”，请在终端执行修复权限：</p>
+                <div class="code-copy-row">
+                  <code>sudo xattr -cr /Applications/UniSearch.app</code>
+                  <button class="btn-copy-code" data-copy="sudo xattr -cr /Applications/UniSearch.app">复制</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Windows 下载卡片 -->
+          <div class="download-platform-card" id="download-win">
+            <div class="platform-card-header">
+              <div class="platform-icon-box">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="platform-name">Windows 客户端</h3>
+                <span class="platform-ver">适用于 Windows 10 / 11 (64位)</span>
+              </div>
+            </div>
+
+            <div class="platform-card-body">
+              <div class="arch-selector">
+                <div class="arch-option">
+                  <span class="arch-title">📦 安装包版 (.exe)</span>
+                  <span class="arch-desc">推荐使用，自动创建桌面快捷方式</span>
+                </div>
+                <div class="arch-option">
+                  <span class="arch-title">🗂️ 免安装绿色版 (.zip)</span>
+                  <span class="arch-desc">解压即用，不写入系统注册表</span>
+                </div>
+              </div>
+
+              <div class="download-action-list">
+                <a href="https://github.com/ucmao/unisearch/releases" target="_blank" rel="noopener"
+                  class="btn-download-channel btn-channel-github">
+                  <svg viewBox="0 0 16 16" fill="currentColor">
+                    <path
+                      d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                  </svg>
+                  <span>GitHub Releases 官方下载 (.exe / .zip)</span>
+                </a>
+
+                <a href="https://github.com/ucmao/unisearch/releases" target="_blank" rel="noopener"
+                  class="btn-download-channel btn-channel-mirror">
+                  <span class="mirror-icon">🚀</span>
+                  <span>国内高速镜像 / 网盘下载</span>
+                </a>
+              </div>
+
+              <div class="install-tips-box">
+                <div class="tips-head">💡 <strong>Windows 提示</strong>：</div>
+                <p>若 SmartScreen 拦截，点击「更多信息」→「仍要运行」即可正常启动。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 开发者源码快速启动 -->
+        <div class="source-code-box">
+          <div class="source-info">
+            <h4>👨‍💻 开发者源码调试</h4>
+            <p>基于 Node.js 22+ 与 TypeScript，一行命令即可本地启动开发模式：</p>
+          </div>
+          <div class="source-code-block">
+            <code>git clone https://github.com/ucmao/unisearch.git && cd unisearch/unisearch && npm install && npm run electron:dev</code>
+            <button class="btn-copy-code"
+              data-copy="git clone https://github.com/ucmao/unisearch.git && cd unisearch/unisearch && npm install && npm run electron:dev">复制命令</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 开源社区与 Star 引导 -->
+    <section class="opensource-section" id="community">
+      <div class="container">
+        <div class="star-callout-card">
+          <div class="star-card-content">
+            <div class="star-badge-pill">⭐ OPEN SOURCE ON GITHUB</div>
+            <h2 class="star-card-title">用开源赋能每一位深度调研者与分析师</h2>
+            <p class="star-card-desc">
+              UniSearch 遵循 MIT 协议开源。欢迎在 GitHub 上为项目点亮 <strong>Star</strong> 或提交 <strong>Issue 与
+                PR</strong>，共同完善多源数据与洞察生态！
+            </p>
+            <div class="star-actions-row">
+              <a href="https://github.com/ucmao/unisearch" target="_blank" rel="noopener noreferrer"
+                class="btn-star-huge">
+                <svg viewBox="0 0 16 16" fill="currentColor">
+                  <path
+                    d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                </svg>
+                <span>在 GitHub 上 Star 支持 ⭐</span>
+              </a>
+              <a href="https://github.com/ucmao/unisearch/issues" target="_blank" rel="noopener noreferrer"
+                class="btn-issue-link">
+                <span>提交建议与反馈 ↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 常见问题解答 -->
+    <section class="faq-section" id="faq">
+      <div class="container">
+        <div class="section-header text-center">
+          <span class="section-tag">FREQUENTLY ASKED QUESTIONS</span>
+          <h2 class="section-title">常见问题解答</h2>
+          <p class="section-subtitle">关于本地隐私、多模型接入、增量对比与反爬风控的快速解答</p>
+        </div>
+
+        <div class="faq-accordion-list">
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>UniSearch 是完全免费的吗？需要配置大模型吗？</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
+            <div class="faq-answer">
+              <p>UniSearch 客户端基于 MIT 协议完全免费开源。AI 规划与研报分析需在「设置」中填入您自己的大模型 API Key（支持 DeepSeek、MiniMax、OpenAI 或任意兼容
+                API，官方直连计费，UniSearch 不收任何中间费用）。</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>我的采集数据与账号 Cookie 会被上传云端吗？</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
+            <div class="faq-answer">
+              <p>绝对不会。UniSearch 采用 Local-First（本地优先）设计，所有原始数据、SQLite 数据库、本地向量索引与登录会话仅保存在本机硬盘，不上传任何第三方服务器。</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>什么是增量采集与研报版本对比？</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
+            <div class="faq-answer">
+              <p>对同一主题进行持续跟踪时，增量模式会自动去重并仅采集最新发布内容；研报对比面板可并排高亮新出现的实体、观点变化与数据异同，直观呈现舆情演变。</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>遇到部分平台需要滑块或验证码时如何处理？</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
+            <div class="faq-answer">
+              <p>UniSearch 具备智能防风控与人机挑战捕获机制。遇到图形验证码或滑块时，会自动弹出内置交互窗口供您手动完成验证，完成后自动持久化会话并无缝继续执行。</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>本地混合知识库 RAG 是如何工作的？</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
+            <div class="faq-answer">
+              <p>系统自动对抓取内容清洗归一，构建 SQLite FTS5 全文索引与本地语义向量库。在生成调研报告时执行混合多路召回与逐句溯源，确保每个论点均有清晰出处支撑。</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>支持哪些操作系统与芯片架构？</span>
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
+            <div class="faq-answer">
+              <p>原生支持 macOS（Apple Silicon M系列及 Intel 芯片，macOS 11.0+）和 Windows 10/11 64 位系统。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 高级极简页脚 -->
+  <footer class="site-footer">
+    <div class="container footer-container">
+      <div class="footer-grid">
+        <!-- 品牌简介 -->
+        <div class="footer-col footer-brand-col">
+          <div class="footer-brand">
+            <img src="./assets/icon-circle.png" alt="UniSearch" class="footer-logo">
+            <span class="footer-brand-title">UniSearch</span>
+          </div>
+          <p class="footer-desc">
+            现代化跨平台 AI 自主内容调研与数据采集工作台。自然语言驱动，本地知识沉淀。
+          </p>
+          <div class="footer-license-badge">
+            <span>MIT License</span>
+            <span>•</span>
+            <span>Local-First</span>
+          </div>
+        </div>
+
+        <!-- 功能导航 -->
+        <div class="footer-col">
+          <h4 class="footer-heading">核心导航</h4>
+          <ul class="footer-links">
+            <li><a href="#features">核心特性</a></li>
+            <li><a href="#connectors">信源与技能</a></li>
+            <li><a href="#architecture">系统架构</a></li>
+            <li><a href="https://github.com/ucmao/unisearch" target="_blank" rel="noopener">GitHub 源码</a></li>
+          </ul>
+        </div>
+
+        <!-- 下载专区 -->
+        <div class="footer-col">
+          <h4 class="footer-heading">下载与发版</h4>
+          <ul class="footer-links">
+            <li><a href="#download-mac">macOS 版 (.dmg)</a></li>
+            <li><a href="#download-win">Windows 版 (.exe)</a></li>
+            <li><a href="https://github.com/ucmao/unisearch/releases" target="_blank" rel="noopener">Release 发版历史</a>
+            </li>
+            <li><a href="#download">国内镜像下载</a></li>
+          </ul>
+        </div>
+
+        <!-- 联系作者 -->
+        <div class="footer-col">
+          <h4 class="footer-heading">交流与支持</h4>
+          <ul class="footer-contact-list">
+            <li><strong>微信：</strong><code>csdnxr</code></li>
+            <li><strong>QQ：</strong><code>294323976</code></li>
+            <li><strong>邮箱：</strong><a href="mailto:leoucmao@gmail.com">leoucmao@gmail.com</a></li>
+            <li><strong>反馈：</strong><a href="https://github.com/ucmao/unisearch/issues" target="_blank"
+                rel="noopener">GitHub Issues</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div class="copyright">
+          © 2026 UniSearch. All rights reserved. 遵循 MIT 开源协议。
+        </div>
+        <div class="footer-disclaimer">
+          <strong>免责声明：</strong> 本项目仅供技术学习与学术研究使用，请在遵守相关法律法规及目标平台服务条款的前提下合规采集。
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast 提示 -->
+  <div class="toast-notification" id="toastNotification">
+    <span class="toast-icon">✓</span>
+    <span class="toast-message" id="toastMessage">已复制到剪贴板</span>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+
+</html>
