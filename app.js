@@ -4,6 +4,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  applySiteConfig();
   initThemeToggle();
   initOSDetection();
   initDownloadDropdown();
@@ -13,6 +14,45 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
   fetchGitHubStars();
 });
+
+/**
+ * 0. 全局配置绑定 (基于 config.js 解决硬编码问题)
+ */
+function applySiteConfig() {
+  const config = window.SITE_CONFIG;
+  if (!config) return;
+
+  // 1. 绑定 GitHub Releases 动态链接
+  if (config.githubReleases) {
+    document.querySelectorAll('.btn-channel-github, a[href*="releases"]').forEach(el => {
+      el.setAttribute('href', config.githubReleases);
+    });
+  }
+
+  // 2. 绑定 百度网盘 镜像链接（支持随时按状态隐藏）
+  if (config.baiduMirror) {
+    document.querySelectorAll('.btn-channel-mirror').forEach(el => {
+      if (config.baiduMirror.enabled && config.baiduMirror.url) {
+        el.setAttribute('href', config.baiduMirror.url);
+        el.style.display = '';
+        const span = el.querySelector('span:not(.mirror-icon)');
+        if (span && config.baiduMirror.pwd) {
+          span.textContent = `百度网盘镜像下载 (提取码: ${config.baiduMirror.pwd})`;
+        }
+      } else {
+        el.style.display = 'none';
+      }
+    });
+  }
+
+  // 3. 绑定 开发者源码快速启动命令
+  if (config.cloneCommand) {
+    const codeEl = document.querySelector('.source-code-block code');
+    const copyBtn = document.querySelector('.source-code-block .btn-copy-code');
+    if (codeEl) codeEl.textContent = config.cloneCommand;
+    if (copyBtn) copyBtn.setAttribute('data-copy', config.cloneCommand);
+  }
+}
 
 /**
  * 0. 浅色 / 深色主题切换 (Light Mode Default)
@@ -255,7 +295,7 @@ function initCodeCopy() {
 }
 
 /**
- * 6. 移动端汉堡菜单切换
+ * 6. 移动端汉堡菜单切换（支持点击空白处自动收起及窗口重置）
  */
 function initMobileMenu() {
   const toggleBtn = document.getElementById('mobileMenuToggle');
@@ -263,14 +303,32 @@ function initMobileMenu() {
 
   if (!toggleBtn || !nav) return;
 
-  toggleBtn.addEventListener('click', () => {
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
     nav.classList.toggle('mobile-active');
   });
 
+  // 点击菜单内的导航项后自动收起
   nav.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', () => {
       nav.classList.remove('mobile-active');
     });
+  });
+
+  // 点击页面任意空白处自动收起移动端菜单
+  document.addEventListener('click', (e) => {
+    if (nav.classList.contains('mobile-active')) {
+      if (!nav.contains(e.target) && !toggleBtn.contains(e.target)) {
+        nav.classList.remove('mobile-active');
+      }
+    }
+  });
+
+  // 窗口切回桌面端宽度 (>768px) 时自动重置状态
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768 && nav.classList.contains('mobile-active')) {
+      nav.classList.remove('mobile-active');
+    }
   });
 }
 
@@ -281,8 +339,12 @@ async function fetchGitHubStars() {
   const starBadge = document.getElementById('headerStarBadge');
   if (!starBadge) return;
 
+  const config = window.SITE_CONFIG;
+  const repoUrl = config?.githubRepo || 'https://github.com/ucmao/unisearch';
+  const repoPath = repoUrl.replace(/^https?:\/\/github\.com\//, '');
+
   try {
-    const response = await fetch('https://api.github.com/repos/ucmao/unisearch', {
+    const response = await fetch(`https://api.github.com/repos/${repoPath}`, {
       headers: { 'Accept': 'application/vnd.github.v3+json' }
     });
     if (response.ok) {
