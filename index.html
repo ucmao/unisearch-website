@@ -8,12 +8,12 @@
   <meta name="theme-color" content="#f7f5f0">
   <title>UniSearch — 现代化跨平台 AI 自主内容调研与数据采集工作台</title>
   <meta name="description"
-    content="UniSearch 是一款基于 AI 的跨平台公开内容采集与深度调研桌面工作台。支持自然语言任务规划、32+ 独立平台连接器并发抓取、本地优先知识库（FTS5 + 本地向量检索）、引用式精准 RAG、实体治理与知识图谱。">
-  <meta name="keywords" content="UniSearch, AI调研, 数据采集, 爬虫工作台, 知识图谱, 本地优先, RAG, Electron, SQLite, 开源工具">
+    content="UniSearch 是一款基于 AI 的跨平台公开内容采集与深度调研桌面工作台。支持自然语言任务规划、32+ 独立平台连接器并发抓取、纯本地 ONNX 向量嵌入模型（免 API Key 离线语义检索）、本地优先知识库（FTS5 + 向量混合召回）、引用式精准 RAG、实体治理与知识图谱。">
+  <meta name="keywords" content="UniSearch, AI调研, 数据采集, 爬虫工作台, 本地向量模型, ONNX, 向量检索, 知识图谱, 本地优先, RAG, Electron, SQLite, 开源工具">
 
   <!-- Open Graph -->
   <meta property="og:title" content="UniSearch — 现代化跨平台 AI 自主内容调研与数据采集工作台">
-  <meta property="og:description" content="自然语言驱动，32+ 平台连接器并发采集，本地混合检索与实体图谱，数据 100% 本地留存。">
+  <meta property="og:description" content="自然语言驱动，32+ 平台并发采集，本地 ONNX 向量检索与实体图谱，数据 100% 本地留存。">
   <meta property="og:image" content="./assets/icon.png">
   <meta property="og:type" content="website">
 
@@ -42,7 +42,7 @@
       <a href="#hero" class="brand-logo" aria-label="UniSearch 首页">
         <img src="./assets/icon-circle.png" alt="UniSearch Logo" class="brand-icon">
         <span class="brand-name">UniSearch</span>
-        <span class="brand-badge">v1.2 · MIT</span>
+        <span class="brand-badge">MIT</span>
       </a>
 
       <nav class="main-nav" id="mainNav">
@@ -98,7 +98,7 @@
 
         <!-- 副标题（精炼克制） -->
         <p class="hero-subtitle">
-          AI规划调研路径 · 32+平台并发抓取 · 本地优先混合RAG · 实体图谱拓扑 · 100%数据本地留存
+          AI规划调研路径 · 32+平台并发抓取 · 内置ONNX向量引擎 · 混合RAG溯源 · 100%数据留存
         </p>
 
         <!-- CTA 按钮组 -->
@@ -181,7 +181,11 @@
           </div>
           <div class="feature-tag-item">
             <span class="tag-icon">🧠</span>
-            <span>FTS5 + 向量混合检索</span>
+            <span>纯本地 ONNX 向量引擎</span>
+          </div>
+          <div class="feature-tag-item">
+            <span class="tag-icon">🔍</span>
+            <span>FTS5 + 语义混合召回</span>
           </div>
           <div class="feature-tag-item">
             <span class="tag-icon">🕸️</span>
@@ -799,17 +803,17 @@
             </div>
           </div>
 
-          <!-- Bento 2: 本地混合知识库与引用式 RAG -->
+          <!-- Bento 2: 纯本地 ONNX 向量引擎与混合 RAG -->
           <div class="bento-card">
-            <div class="bento-badge">Local-First RAG</div>
-            <h3 class="bento-title">本地混合知识库与精准 RAG</h3>
+            <div class="bento-badge">Local ONNX Embedding & RAG</div>
+            <h3 class="bento-title">纯本地向量引擎与精准 RAG</h3>
             <p class="bento-desc">
-              SQLite FTS5 全文索引与本地向量检索深度融合，回答逐句标注原始信源出处与命中段落。
+              开箱内置纯本地 ONNX 向量模型，免 API Key、零 Token 成本毫秒级离线向量计算；与 SQLite FTS5 全文索引深度融合，实现逐句引用溯源。
             </p>
             <ul class="bento-feature-list">
-              <li>🔍 关键词 + 语义混合召回</li>
-              <li>📌 逐句事实证据精确溯源</li>
-              <li>🔒 知识索引 100% 存储于本地</li>
+              <li>⚡ 内置本地 ONNX 向量引擎</li>
+              <li>🔍 关键词 (FTS5) + 语义向量混合多路召回</li>
+              <li>📌 逐句事实证据精确溯源与高亮</li>
             </ul>
           </div>
 
@@ -925,7 +929,7 @@
                 <span class="arch-num">04</span>
                 <h4>本地知识与资产</h4>
               </div>
-              <p>SQLite FTS5 全文索引、本地向量检索、引用式 RAG 与多格式导出。</p>
+              <p>纯本地 ONNX 向量引擎 (512维)、SQLite FTS5 全文索引、引用式 RAG 与多格式导出。</p>
             </div>
           </div>
 
@@ -933,6 +937,10 @@
             <div class="summary-item">
               <strong>🔒 100% 数据本地留存</strong>
               <span>数据、知识库索引与登录态仅保留在本地设备，零云端上传</span>
+            </div>
+            <div class="summary-item">
+              <strong>🧠 内置纯本地向量引擎</strong>
+              <span>开箱即用离线 ONNX 向量模型，无需 API Key 即可进行毫秒级语义检索</span>
             </div>
             <div class="summary-item">
               <strong>⚡ 混合引擎高并发</strong>
@@ -1127,8 +1135,7 @@
               </svg>
             </button>
             <div class="faq-answer">
-              <p>UniSearch 客户端基于 MIT 协议完全免费开源。AI 规划与研报分析需在「设置」中填入您自己的大模型 API Key（支持 DeepSeek、MiniMax、OpenAI 或任意兼容
-                API，官方直连计费，UniSearch 不收任何中间费用）。</p>
+              <p>UniSearch 客户端基于 MIT 协议完全免费开源。知识库向量检索<strong>开箱即用内置纯本地 ONNX 向量引擎，无需配置任何 API Key，完全离线运行且零费用</strong>。AI 意图规划与深度研报撰写需在「设置」中填入您自己的大模型 API Key（支持 DeepSeek、MiniMax、OpenAI 或本地 Ollama 兼容 API，官方直连计费，UniSearch 不收任何中间费用）。</p>
             </div>
           </div>
 
@@ -1170,13 +1177,13 @@
 
           <div class="faq-item">
             <button class="faq-question">
-              <span>本地混合知识库 RAG 是如何工作的？</span>
+              <span>本地混合知识库与向量检索是如何工作的？</span>
               <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M6 9l6 6 6-6" />
               </svg>
             </button>
             <div class="faq-answer">
-              <p>系统自动对抓取内容清洗归一，构建 SQLite FTS5 全文索引与本地语义向量库。在生成调研报告时执行混合多路召回与逐句溯源，确保每个论点均有清晰出处支撑。</p>
+              <p>UniSearch 内置轻量高效的 <code>BAAI/bge-small-zh-v1.5</code> 量化 ONNX 向量嵌入引擎，在本地将清洗后的文档片段转化为 512 维向量。结合 SQLite FTS5 全文搜索引擎，通过倒数排名融合（RRF）算法同时进行关键字与语义多路召回，并可选用 Reranker 进一步精排；研报中的每个结论均精准挂载原始证据片段，确保论点可逐句溯源。</p>
             </div>
           </div>
 
