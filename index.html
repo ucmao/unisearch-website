@@ -201,12 +201,8 @@
           </div>
         </div>
 
-        <!-- 产品界面窗口预览 -->
+        <!-- 产品界面窗口预览 (搭载真实实机截图与多视角切换) -->
         <div class="hero-showcase-window">
-          <img class="hero-product-screenshot" src="./assets/hero-real-workspace.png"
-            alt="UniSearch 真实产品界面：输入调研诉求，AI 规划路径并执行数据抓取与图谱分析" width="1280" height="720" decoding="async"
-            fetchpriority="high">
-          <span class="real-ui-badge">UniSearch 工作台实机界面</span>
           <div class="window-header">
             <div class="mac-controls">
               <span class="ctrl-dot dot-red"></span>
@@ -215,98 +211,75 @@
             </div>
             <div class="window-title-bar">
               <img src="./assets/icon-circle.png" alt="" class="win-logo-mini">
-              <span>UniSearch Studio · AI 深度调研</span>
+              <span>UniSearch Studio · AI 深度调研桌面工作台</span>
             </div>
-            <div class="window-actions-dummy">
-              <span class="pet-mini-badge">🐾 Codex Pet 就绪</span>
-              <span class="dummy-status">🟢 服务正常运行</span>
+            <div class="hero-view-tabs" id="heroViewTabs">
+              <button class="hero-tab-btn active" data-img="./assets/screenshots/03_workbench_panel.webp" data-caption="32+ 平台并发采集大盘实机截图">🌐 采集大盘</button>
+              <button class="hero-tab-btn" data-img="./assets/screenshots/05_report_result.webp" data-caption="AI 深度调研研报与事实溯源">📊 研报结果</button>
+              <button class="hero-tab-btn" data-img="./assets/screenshots/06_knowledge_graph.webp" data-caption="交互式实体关系知识图谱">🕸️ 知识图谱</button>
+              <button class="hero-tab-btn" data-img="./assets/screenshots/01_home_pet.webp" data-caption="极简首页与桌面伴侣互动">🐾 桌面伴侣</button>
             </div>
           </div>
 
-          <div class="window-body">
-            <!-- 模拟顶部 Prompt 输入区 -->
-            <div class="mockup-search-container">
-              <div class="mockup-search-icon">🔍</div>
-              <div class="mockup-search-input">
-                <span class="typing-text">深度调研新能源汽车固态电池量产进展、用户反馈并生成技术拓扑图谱</span>
-                <span class="cursor-blink">|</span>
-              </div>
-              <button class="mockup-search-btn">
-                <span>AI 规划并执行</span>
-                <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14">
-                  <path fill-rule="evenodd"
-                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                    clip-rule="evenodd" />
-                </svg>
-              </button>
-            </div>
-
-            <!-- 模拟任务流转工作卡片 -->
-            <div class="mockup-cards-grid">
-              <!-- 卡片 1: AI 意图拆解与增量工作流 -->
-              <div class="mock-card">
-                <div class="mock-card-head">
-                  <span class="badge-blue">意图解析与任务编排</span>
-                  <span class="card-time">增量模式</span>
-                </div>
-                <div class="mock-chip-list">
-                  <span class="chip">🎯 固态电池 商业化进展</span>
-                  <span class="chip">🎯 宁德时代 · 卫蓝 · 埃安</span>
-                  <span class="chip">🎯 质量门禁: 置信度 ≥ 0.85</span>
-                </div>
-              </div>
-
-              <!-- 卡片 2: 实时连接器并发 -->
-              <div class="mock-card">
-                <div class="mock-card-head">
-                  <span class="badge-green">多平台并发采集</span>
-                  <span class="card-speed">⚡ 32.6 条/秒</span>
-                </div>
-                <div class="connector-progress-list">
-                  <div class="conn-prog-row">
-                    <span class="conn-name">小红书</span>
-                    <div class="prog-bar">
-                      <div class="prog-fill" style="width: 88%;"></div>
-                    </div>
-                    <span class="conn-num">48 笔记</span>
-                  </div>
-                  <div class="conn-prog-row">
-                    <span class="conn-name">哔哩哔哩</span>
-                    <div class="prog-bar">
-                      <div class="prog-fill" style="width: 100%;"></div>
-                    </div>
-                    <span class="conn-num">完成 (320 评)</span>
-                  </div>
-                  <div class="conn-prog-row">
-                    <span class="conn-name">arXiv 论文库</span>
-                    <div class="prog-bar">
-                      <div class="prog-fill" style="width: 75%;"></div>
-                    </div>
-                    <span class="conn-num">16 篇文献</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- 卡片 3: 研究图谱与分析 -->
-              <div class="mock-card">
-                <div class="mock-card-head">
-                  <span class="badge-purple">实体图谱与洞察</span>
-                  <span class="card-status">12 个实体节点</span>
-                </div>
-                <div class="mock-summary-text">
-                  📊 <strong>实体关系提炼</strong>：抽取固态电解质、能量密度、低温衰减等 12 项实体关系，并生成多版本对比洞察。
-                </div>
-                <div class="mock-graph-preview">
-                  <span class="graph-tag">⚯ 宁德时代 ↔ 凝聚态电池</span>
-                  <span class="graph-tag">⚯ 续航达成率 ↔ 低温测试</span>
-                </div>
-              </div>
+          <div class="window-screen-container" id="heroScreenContainer" data-lightbox="./assets/screenshots/03_workbench_panel.webp">
+            <img class="hero-product-screenshot" id="heroProductImg" src="./assets/screenshots/03_workbench_panel.webp"
+              alt="UniSearch 真实产品界面：32+ 平台并发采集大盘" width="1280" height="720" decoding="async"
+              fetchpriority="high">
+            <div class="screenshot-overlay-hint">
+              <span class="hint-badge">🔍 点击全屏预览高清实机细节</span>
             </div>
           </div>
         </div>
 
       </div>
     </section>
+ 
+    <!-- 32+ 生态信源无限滚动跑马灯 Logo Wall -->
+    <div class="marquee-wall-wrapper">
+      <div class="marquee-header-label">
+        <span>全网 32+ 核心信源与 AI 搜索引擎生态无缝覆盖</span>
+      </div>
+      <div class="marquee-track">
+        <div class="marquee-group">
+          <div class="marquee-item"><img src="./assets/logos/xiaohongshu_logo.png" alt="小红书"><span>小红书</span></div>
+          <div class="marquee-item"><img src="./assets/logos/douyin.png" alt="抖音"><span>抖音</span></div>
+          <div class="marquee-item"><img src="./assets/logos/bilibili_logo.png" alt="哔哩哔哩"><span>B站</span></div>
+          <div class="marquee-item"><span class="badge-icon bg-blue">DS</span><span>DeepSeek</span></div>
+          <div class="marquee-item"><span class="badge-icon bg-dark">Ki</span><span>Kimi</span></div>
+          <div class="marquee-item"><span class="badge-icon bg-blue">豆</span><span>豆包</span></div>
+          <div class="marquee-item"><span class="badge-icon bg-purple">通</span><span>通义千问</span></div>
+          <div class="marquee-item"><span class="badge-icon bg-blue">知</span><span>知乎</span></div>
+          <div class="marquee-item"><span class="badge-icon bg-red">微</span><span>微博</span></div>
+          <div class="marquee-item"><span class="badge-icon bg-orange">快</span><span>快手</span></div>
+          <div class="marquee-item"><span class="badge-icon bg-blue">百</span><span>百度搜索</span></div>
+          <div class="marquee-item"><span class="badge-icon bg-cyan">Bing</span><span>微软必应</span></div>
+          <div class="marquee-item"><span class="badge-icon bg-red">36Kr</span><span>36氪</span></div>
+          <div class="marquee-item"><span class="badge-icon bg-purple">arXiv</span><span>arXiv 论文</span></div>
+          <div class="marquee-item"><img src="./assets/logos/github.png" alt="GitHub"><span>GitHub</span></div>
+          <div class="marquee-item"><span class="badge-icon bg-cyan">BOSS</span><span>BOSS直聘</span></div>
+          <div class="marquee-item"><span class="badge-icon bg-orange">猎</span><span>猎聘网</span></div>
+        </div>
+        <div class="marquee-group" aria-hidden="true">
+          <div class="marquee-item"><img src="./assets/logos/xiaohongshu_logo.png" alt="小红书"><span>小红书</span></div>
+          <div class="marquee-item"><img src="./assets/logos/douyin.png" alt="抖音"><span>抖音</span></div>
+          <div class="marquee-item"><img src="./assets/logos/bilibili_logo.png" alt="哔哩哔哩"><span>B站</span></div>
+          <div class="marquee-item"><span class="badge-icon bg-blue">DS</span><span>DeepSeek</span></div>
+          <div class="marquee-item"><span class="badge-icon bg-dark">Ki</span><span>Kimi</span></div>
+          <div class="marquee-item"><span class="badge-icon bg-blue">豆</span><span>豆包</span></div>
+          <div class="marquee-item"><span class="badge-icon bg-purple">通</span><span>通义千问</span></div>
+          <div class="marquee-item"><span class="badge-icon bg-blue">知</span><span>知乎</span></div>
+          <div class="marquee-item"><span class="badge-icon bg-red">微</span><span>微博</span></div>
+          <div class="marquee-item"><span class="badge-icon bg-orange">快</span><span>快手</span></div>
+          <div class="marquee-item"><span class="badge-icon bg-blue">百</span><span>百度搜索</span></div>
+          <div class="marquee-item"><span class="badge-icon bg-cyan">Bing</span><span>微软必应</span></div>
+          <div class="marquee-item"><span class="badge-icon bg-red">36Kr</span><span>36氪</span></div>
+          <div class="marquee-item"><span class="badge-icon bg-purple">arXiv</span><span>arXiv 论文</span></div>
+          <div class="marquee-item"><img src="./assets/logos/github.png" alt="GitHub"><span>GitHub</span></div>
+          <div class="marquee-item"><span class="badge-icon bg-cyan">BOSS</span><span>BOSS直聘</span></div>
+          <div class="marquee-item"><span class="badge-icon bg-orange">猎</span><span>猎聘网</span></div>
+        </div>
+      </div>
+    </div>
 
     <!-- 32 独立信源与 13 大内置技能矩阵 -->
     <section class="connectors-section" id="connectors">
@@ -765,6 +738,16 @@
             <span>未找到匹配的信源或技能，请尝试其他关键词</span>
           </div>
         </div>
+
+        <!-- 展开/收起完整连接器列表按钮 -->
+        <div class="connectors-expand-bar" id="connectorsExpandBar">
+          <button class="btn-toggle-connectors" id="toggleConnectorsBtn">
+            <span id="toggleConnectorsText">展开查看全部 32+ 信源与 13 大技能 (45)</span>
+            <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </button>
+        </div>
       </div>
     </section>
 
@@ -778,111 +761,136 @@
         </div>
 
         <div class="bento-grid">
-          <!-- Bento 1: AI 自主规划与增量调度 -->
+          <!-- Bento 1: AI 自主规划与版本化研报库 -->
           <div class="bento-card bento-col-2">
-            <div class="bento-badge">Agent & Incremental Planning</div>
-            <h3 class="bento-title">AI 自主任务规划与增量调度</h3>
-            <p class="bento-desc">
-              自然语言输入调研诉求，Agent 自主规划采集路径与信源组合。支持增量迭代采集与多次研报并排比对，自动追踪舆情与事实演进。
-            </p>
-            <div class="bento-visual visual-workflow-demo">
-              <div class="flow-step">
-                <span class="step-num">1</span>
-                <span>自然语言诉求</span>
-              </div>
-              <div class="flow-arrow">→</div>
-              <div class="flow-step">
-                <span class="step-num">2</span>
-                <span>多源增量抓取</span>
-              </div>
-              <div class="flow-arrow">→</div>
-              <div class="flow-step">
-                <span class="step-num">3</span>
-                <span>版本对比研报</span>
-              </div>
+            <div class="bento-card-text">
+              <div class="bento-badge">Agent & Report Versions</div>
+              <h3 class="bento-title">AI 自主任务规划与版本化研报库</h3>
+              <p class="bento-desc">
+                输入自然语言调研诉求，Agent 自主拆解并规划采集路径。支持多次增量迭代采集，多版本研报并排对比与质量门禁，清晰洞察舆情事实演进。
+              </p>
+              <ul class="bento-feature-list">
+                <li>🎯 自然语言意图拆解与子任务编排</li>
+                <li>📑 多版本研报并排对比与演进追踪</li>
+                <li>🛡️ 质量门禁自动评分与置信度过滤</li>
+              </ul>
+            </div>
+            <div class="bento-image-wrap" data-lightbox="./assets/screenshots/09_report_versions.webp" data-caption="版本化研报库与质量门禁实机截图">
+              <img src="./assets/screenshots/09_report_versions.webp" alt="版本化研报库与质量门禁" loading="lazy">
+              <span class="zoom-badge">🔍 点击查看大图</span>
             </div>
           </div>
 
-          <!-- Bento 2: 纯本地 ONNX 向量引擎与混合 RAG -->
+          <!-- Bento 2: 纯本地 ONNX 向量引擎与精准 RAG -->
           <div class="bento-card">
-            <div class="bento-badge">Local ONNX Embedding & RAG</div>
-            <h3 class="bento-title">纯本地向量引擎与精准 RAG</h3>
-            <p class="bento-desc">
-              开箱内置纯本地 ONNX 向量模型，免 API Key、零 Token 成本毫秒级离线向量计算；与 SQLite FTS5 全文索引深度融合，实现逐句引用溯源。
-            </p>
-            <ul class="bento-feature-list">
-              <li>⚡ 内置本地 ONNX 向量引擎</li>
-              <li>🔍 关键词 (FTS5) + 语义向量混合多路召回</li>
-              <li>📌 逐句事实证据精确溯源与高亮</li>
-            </ul>
-          </div>
-
-          <!-- Bento 3: 实体治理与知识图谱 -->
-          <div class="bento-card">
-            <div class="bento-badge">Entity Graph</div>
-            <h3 class="bento-title">实体治理与拓扑图谱</h3>
-            <p class="bento-desc">
-              自动抽取公司、产品、人物等核心实体，支持相似实体一键归并、多义拆分与力导向拓扑呈现。
-            </p>
-            <ul class="bento-feature-list">
-              <li>🕸️ 力导向动态拓扑关系图</li>
-              <li>🔗 实体自动抽取与归并拆分</li>
-              <li>🎯 节点穿透关联原始文档证据</li>
-            </ul>
-          </div>
-
-          <!-- Bento 4: 数据质量门禁与进程沙箱 -->
-          <div class="bento-card">
-            <div class="bento-badge">Sandbox & Quality Gate</div>
-            <h3 class="bento-title">子进程沙箱与质量门禁</h3>
-            <p class="bento-desc">
-              Node.js 子进程沙箱隔离运行，界面始终丝滑流畅。内置置信度门禁与自动去重，确保入库数据真实有效。
-            </p>
-            <div class="bento-tag-cloud">
-              <span class="tech-tag">多 Worker 进程隔离</span>
-              <span class="tech-tag">置信度门禁评分</span>
-              <span class="tech-tag">异常自动熔断恢复</span>
+            <div class="bento-card-text">
+              <div class="bento-badge">Local ONNX Embedding & RAG</div>
+              <h3 class="bento-title">纯本地向量引擎与精准 RAG</h3>
+              <p class="bento-desc">
+                开箱内置纯本地 ONNX 向量模型，免 API Key、零 Token 成本离线向量计算；与 SQLite FTS5 全文索引深度融合，实现逐句证据高亮溯源。
+              </p>
+              <ul class="bento-feature-list">
+                <li>⚡ 内置本地 ONNX 向量模型 (512维)</li>
+                <li>🔍 FTS5 关键词 + 向量语义混合多路召回</li>
+                <li>📌 逐句事实证据精确溯源与原始网页悬浮</li>
+              </ul>
+            </div>
+            <div class="bento-image-wrap" data-lightbox="./assets/screenshots/08_settings_retrieval.webp" data-caption="纯本地向量模型与知识检索配置实机截图">
+              <img src="./assets/screenshots/08_settings_retrieval.webp" alt="纯本地向量与模型配置" loading="lazy">
+              <span class="zoom-badge">🔍 点击查看大图</span>
             </div>
           </div>
 
-          <!-- Bento 5: 认证沙箱与桌面伴侣 -->
+          <!-- Bento 3: 实体治理与拓扑图谱 -->
           <div class="bento-card">
-            <div class="bento-badge">Session & Codex Pet</div>
-            <h3 class="bento-title">内置会话沙箱与伴侣交互</h3>
-            <p class="bento-desc">
-              内置隔离 Chromium 浏览器扫码登录，Cookie 本地持久化；Codex Pet 桌面伴侣实时联动任务进度。
-            </p>
-            <div class="bento-tag-cloud">
-              <span class="tech-tag">扫码登录免重复认证</span>
-              <span class="tech-tag">人机挑战可视化交互</span>
-              <span class="tech-tag">Codex Pet 状态联动</span>
+            <div class="bento-card-text">
+              <div class="bento-badge">Entity Graph</div>
+              <h3 class="bento-title">实体治理与交互式知识图谱</h3>
+              <p class="bento-desc">
+                自动抽取公司、产品、技术与人物核心实体，支持相似实体一键归并、多义拆分与力导向拓扑关系呈现。
+              </p>
+              <ul class="bento-feature-list">
+                <li>🕸️ 力导向动态拓扑关系可视化</li>
+                <li>🔗 实体自动抽取、归并与多义词消歧</li>
+                <li>🎯 实体节点一键穿透关联原始证据</li>
+              </ul>
+            </div>
+            <div class="bento-image-wrap" data-lightbox="./assets/screenshots/06_knowledge_graph.webp" data-caption="交互式知识图谱与实体拓扑实机截图">
+              <img src="./assets/screenshots/06_knowledge_graph.webp" alt="交互式知识图谱" loading="lazy">
+              <span class="zoom-badge">🔍 点击查看大图</span>
+            </div>
+          </div>
+
+          <!-- Bento 4: 会话沙箱与桌面伴侣 -->
+          <div class="bento-card">
+            <div class="bento-card-text">
+              <div class="bento-badge">Session & Codex Pet</div>
+              <h3 class="bento-title">内置会话沙箱与 Codex Pet 伴侣</h3>
+              <p class="bento-desc">
+                内置隔离浏览器扫码登录，Cookie 本地安全持久化；萌系 Codex Pet 桌面伴侣实时反馈采集进度与状态。
+              </p>
+              <ul class="bento-feature-list">
+                <li>🐾 8+ 款 Codex Pet 动态伴侣互动</li>
+                <li>🔑 扫码登录一次认证，本地免重复登录</li>
+                <li>🛡️ 验证码与人机挑战捕获窗口</li>
+              </ul>
+            </div>
+            <div class="bento-image-wrap" data-lightbox="./assets/screenshots/01_home_pet.webp" data-caption="极简首页与桌面伴侣互动实机截图">
+              <img src="./assets/screenshots/01_home_pet.webp" alt="极简首页与桌面伴侣" loading="lazy">
+              <span class="zoom-badge">🔍 点击查看大图</span>
+            </div>
+          </div>
+
+          <!-- Bento 5: 13+ 场景技能快捷调度 -->
+          <div class="bento-card">
+            <div class="bento-card-text">
+              <div class="bento-badge">Scene Skills & @ Mention</div>
+              <h3 class="bento-title">13+ 场景技能与 @ 快捷调度</h3>
+              <p class="bento-desc">
+                在输入框键入 @ 即可呼出竞品调研、薪酬分析、舆情监控、学术搜索等专业预设技能，一键直达深度洞察。
+              </p>
+              <ul class="bento-feature-list">
+                <li>🎯 @ 键一键唤醒 13 大专属调研场景</li>
+                <li>⚡ 预置 Prompt 模板与最佳信源组合</li>
+                <li>🧩 媒体转录音转文字知识库入库</li>
+              </ul>
+            </div>
+            <div class="bento-image-wrap" data-lightbox="./assets/screenshots/02_at_mention_menu.webp" data-caption="13+ 场景技能 @ 快捷调度实机截图">
+              <img src="./assets/screenshots/02_at_mention_menu.webp" alt="场景技能快捷调度" loading="lazy">
+              <span class="zoom-badge">🔍 点击查看大图</span>
             </div>
           </div>
 
           <!-- Bento 6: 多维数据透视与资产导出 -->
           <div class="bento-card bento-col-2">
-            <div class="bento-badge">Workbench & Exporters</div>
-            <h3 class="bento-title">多维数据透视与全格式资产沉淀</h3>
-            <p class="bento-desc">
-              支持按信源、时间、作者、互动量灵活筛选聚合。采集成果一键导出为 Excel、Word、PDF、Markdown、JSON、CSV、Obsidian 及 IMA 等标准格式。
-            </p>
-            <div class="export-logos-row">
-              <div class="export-item"><img src="./assets/logos/exporter_obsidian.png" alt="Obsidian"
-                  onerror="this.src='./assets/icon-circle.png'"><span>Obsidian</span></div>
-              <div class="export-item"><img src="./assets/logos/exporter_notion.png" alt="Notion"
-                  onerror="this.src='./assets/icon-circle.png'"><span>Notion</span></div>
-              <div class="export-item"><img src="./assets/logos/exporter_dify.png" alt="Dify"
-                  onerror="this.src='./assets/icon-circle.png'"><span>Dify</span></div>
-              <div class="export-item"><img src="./assets/logos/exporter_logseq.png" alt="Logseq"
-                  onerror="this.src='./assets/icon-circle.png'"><span>Logseq</span></div>
-              <div class="export-item"><img src="./assets/logos/exporter_lark.png" alt="飞书"
-                  onerror="this.src='./assets/icon-circle.png'"><span>飞书文档</span></div>
-              <div class="export-item"><img src="./assets/logos/exporter_yuque.png" alt="语雀"
-                  onerror="this.src='./assets/icon-circle.png'"><span>语雀</span></div>
-              <div class="export-item"><img src="./assets/logos/exporter_ima.png" alt="IMA"
-                  onerror="this.src='./assets/icon-circle.png'"><span>IMA</span></div>
-              <div class="export-item"><img src="./assets/logos/exporter_markdown.png" alt="Markdown"
-                  onerror="this.src='./assets/icon-circle.png'"><span>Excel / PDF</span></div>
+            <div class="bento-card-text">
+              <div class="bento-badge">Workbench & Exporters</div>
+              <h3 class="bento-title">多维数据透视与全格式资产沉淀</h3>
+              <p class="bento-desc">
+                支持按信源、发布时间、互动量及情感倾向多维筛选透视。一键将采集分析资产导出为 Excel、PDF、Markdown、Obsidian、Notion 等知识库格式。
+              </p>
+              <div class="export-logos-row">
+                <div class="export-item"><img src="./assets/logos/exporter_obsidian.png" alt="Obsidian"
+                    onerror="this.src='./assets/icon-circle.png'"><span>Obsidian</span></div>
+                <div class="export-item"><img src="./assets/logos/exporter_notion.png" alt="Notion"
+                    onerror="this.src='./assets/icon-circle.png'"><span>Notion</span></div>
+                <div class="export-item"><img src="./assets/logos/exporter_dify.png" alt="Dify"
+                    onerror="this.src='./assets/icon-circle.png'"><span>Dify</span></div>
+                <div class="export-item"><img src="./assets/logos/exporter_logseq.png" alt="Logseq"
+                    onerror="this.src='./assets/icon-circle.png'"><span>Logseq</span></div>
+                <div class="export-item"><img src="./assets/logos/exporter_lark.png" alt="飞书"
+                    onerror="this.src='./assets/icon-circle.png'"><span>飞书文档</span></div>
+                <div class="export-item"><img src="./assets/logos/exporter_yuque.png" alt="语雀"
+                    onerror="this.src='./assets/icon-circle.png'"><span>语雀</span></div>
+                <div class="export-item"><img src="./assets/logos/exporter_ima.png" alt="IMA"
+                    onerror="this.src='./assets/icon-circle.png'"><span>IMA</span></div>
+                <div class="export-item"><img src="./assets/logos/exporter_markdown.png" alt="Markdown"
+                    onerror="this.src='./assets/icon-circle.png'"><span>Excel / PDF</span></div>
+              </div>
+            </div>
+            <div class="bento-image-wrap" data-lightbox="./assets/screenshots/07_data_pivot.webp" data-caption="多维数据透视表与导出实机截图">
+              <img src="./assets/screenshots/07_data_pivot.webp" alt="多维数据透视表" loading="lazy">
+              <span class="zoom-badge">🔍 点击查看大图</span>
             </div>
           </div>
         </div>
@@ -1269,6 +1277,16 @@
       </div>
     </div>
   </footer>
+
+  <!-- 全屏高清截图 Lightbox 模态框 -->
+  <div class="lightbox-modal" id="lightboxModal" aria-hidden="true" role="dialog">
+    <div class="lightbox-backdrop" id="lightboxBackdrop"></div>
+    <div class="lightbox-content">
+      <button class="lightbox-close-btn" id="lightboxCloseBtn" aria-label="关闭预览">✕</button>
+      <img src="" alt="UniSearch 界面全屏预览" class="lightbox-img" id="lightboxImg">
+      <div class="lightbox-caption" id="lightboxCaption"></div>
+    </div>
+  </div>
 
   <!-- Toast 提示 -->
   <div class="toast-notification" id="toastNotification">

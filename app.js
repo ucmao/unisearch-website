@@ -8,7 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initThemeToggle();
   initOSDetection();
   initDownloadDropdown();
+  initHeroViewSwitcher();
   initConnectorFilters();
+  initConnectorsCollapse();
+  initLightbox();
   initFAQAccordion();
   initCodeCopy();
   initMobileMenu();
@@ -149,7 +152,40 @@ function initDownloadDropdown() {
 }
 
 /**
- * 3. 信源平台分类 Tab + 实时搜索组合过滤 (对标 library.html 交互)
+ * 3. Hero 实机展示窗口视角 Tab 切换
+ */
+function initHeroViewSwitcher() {
+  const tabs = document.querySelectorAll('.hero-tab-btn');
+  const img = document.getElementById('heroProductImg');
+  const container = document.getElementById('heroScreenContainer');
+
+  if (!tabs.length || !img || !container) return;
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', (e) => {
+      e.stopPropagation();
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      const newSrc = tab.getAttribute('data-img');
+      const caption = tab.getAttribute('data-caption') || tab.textContent;
+
+      if (newSrc) {
+        img.style.opacity = '0.35';
+        setTimeout(() => {
+          img.src = newSrc;
+          img.alt = caption;
+          container.setAttribute('data-lightbox', newSrc);
+          container.setAttribute('data-caption', caption);
+          img.style.opacity = '1';
+        }, 100);
+      }
+    });
+  });
+}
+
+/**
+ * 4. 信源平台分类 Tab + 实时搜索组合过滤
  */
 function initConnectorFilters() {
   const tabs = document.querySelectorAll('.conn-tab');
@@ -191,6 +227,10 @@ function initConnectorFilters() {
         noResults.classList.remove('visible');
       }
     }
+
+    if (window._refreshConnectorsCollapse) {
+      window._refreshConnectorsCollapse();
+    }
   }
 
   // Tab 点击事件
@@ -224,6 +264,112 @@ function initConnectorFilters() {
       applyFilters();
     });
   }
+}
+
+/**
+ * 5. 信源与技能矩阵精选折叠 / 展开交互
+ */
+function initConnectorsCollapse() {
+  const toggleBtn = document.getElementById('toggleConnectorsBtn');
+  const toggleText = document.getElementById('toggleConnectorsText');
+  const cards = document.querySelectorAll('.conn-card');
+  const expandBar = document.getElementById('connectorsExpandBar');
+
+  if (!toggleBtn || !cards.length) return;
+
+  const DEFAULT_VISIBLE_COUNT = 12;
+  let isExpanded = false;
+
+  function updateCollapseState() {
+    const searchInput = document.getElementById('connectorSearchInput');
+    const hasSearch = searchInput && searchInput.value.trim().length > 0;
+    const activeTab = document.querySelector('.conn-tab.active');
+    const isFilteredTab = activeTab && activeTab.getAttribute('data-category') !== 'all';
+
+    // 搜索或特定分类下直接展示全部
+    if (hasSearch || isFilteredTab) {
+      cards.forEach(card => card.classList.remove('conn-collapsed'));
+      if (expandBar) expandBar.style.display = 'none';
+      return;
+    }
+
+    if (expandBar) expandBar.style.display = 'flex';
+
+    if (isExpanded) {
+      cards.forEach(card => card.classList.remove('conn-collapsed'));
+      toggleBtn.classList.add('expanded');
+      if (toggleText) toggleText.textContent = '收起信源与技能矩阵';
+    } else {
+      let count = 0;
+      cards.forEach((card) => {
+        if (!card.classList.contains('hidden')) {
+          if (count >= DEFAULT_VISIBLE_COUNT) {
+            card.classList.add('conn-collapsed');
+          } else {
+            card.classList.remove('conn-collapsed');
+          }
+          count++;
+        }
+      });
+      toggleBtn.classList.remove('expanded');
+      if (toggleText) toggleText.textContent = `展开查看全部 32+ 信源与 13 大技能 (${cards.length})`;
+    }
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    isExpanded = !isExpanded;
+    updateCollapseState();
+    if (!isExpanded) {
+      document.getElementById('connectors')?.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+
+  window._refreshConnectorsCollapse = updateCollapseState;
+  updateCollapseState();
+}
+
+/**
+ * 6. 全屏高清图片 Lightbox 模态框预览
+ */
+function initLightbox() {
+  const modal = document.getElementById('lightboxModal');
+  const backdrop = document.getElementById('lightboxBackdrop');
+  const closeBtn = document.getElementById('lightboxCloseBtn');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxCaption = document.getElementById('lightboxCaption');
+
+  if (!modal || !lightboxImg) return;
+
+  function openLightbox(src, caption = '') {
+    lightboxImg.src = src;
+    if (lightboxCaption) lightboxCaption.textContent = caption;
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('[data-lightbox]').forEach(el => {
+    el.addEventListener('click', () => {
+      const src = el.getAttribute('data-lightbox');
+      const caption = el.getAttribute('data-caption') || el.querySelector('img')?.getAttribute('alt') || '';
+      if (src) openLightbox(src, caption);
+    });
+  });
+
+  closeBtn?.addEventListener('click', closeLightbox);
+  backdrop?.addEventListener('click', closeLightbox);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+      closeLightbox();
+    }
+  });
 }
 
 /**
