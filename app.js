@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initThemeToggle();
   initOSDetection();
   initDownloadDropdown();
-  initHeroViewSwitcher();
+  initHeroCarousel();
   initConnectorFilters();
   initConnectorsCollapse();
   initLightbox();
@@ -32,23 +32,7 @@ function applySiteConfig() {
     });
   }
 
-  // 2. 绑定 百度网盘 镜像链接（支持随时按状态隐藏）
-  if (config.baiduMirror) {
-    document.querySelectorAll('.btn-channel-mirror').forEach(el => {
-      if (config.baiduMirror.enabled && config.baiduMirror.url) {
-        el.setAttribute('href', config.baiduMirror.url);
-        el.style.display = '';
-        const span = el.querySelector('span:not(.mirror-icon)');
-        if (span && config.baiduMirror.pwd) {
-          span.textContent = `百度网盘镜像下载 (提取码: ${config.baiduMirror.pwd})`;
-        }
-      } else {
-        el.style.display = 'none';
-      }
-    });
-  }
-
-  // 3. 绑定 开发者源码快速启动命令
+  // 2. 绑定 开发者源码快速启动命令
   if (config.cloneCommand) {
     const codeEl = document.querySelector('.source-code-block code');
     const copyBtn = document.querySelector('.source-code-block .btn-copy-code');
@@ -152,36 +136,86 @@ function initDownloadDropdown() {
 }
 
 /**
- * 3. Hero 实机展示窗口视角 Tab 切换
+ * 3. Hero 实机截图自动轮播 (Auto-play Carousel with pause on hover)
  */
-function initHeroViewSwitcher() {
-  const tabs = document.querySelectorAll('.hero-tab-btn');
-  const img = document.getElementById('heroProductImg');
-  const container = document.getElementById('heroScreenContainer');
+function initHeroCarousel() {
+  const carousel = document.getElementById('heroCarousel');
+  const slides = document.querySelectorAll('.carousel-slide');
+  const dotsContainer = document.getElementById('carouselDots');
+  const prevBtn = document.getElementById('carouselPrevBtn');
+  const nextBtn = document.getElementById('carouselNextBtn');
 
-  if (!tabs.length || !img || !container) return;
+  if (!carousel || !slides.length) return;
 
-  tabs.forEach(tab => {
-    tab.addEventListener('click', (e) => {
-      e.stopPropagation();
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
+  let currentIndex = 0;
+  let timer = null;
+  const INTERVAL_TIME = 3800; // 3.8秒自动轮播
 
-      const newSrc = tab.getAttribute('data-img');
-      const caption = tab.getAttribute('data-caption') || tab.textContent;
-
-      if (newSrc) {
-        img.style.opacity = '0.35';
-        setTimeout(() => {
-          img.src = newSrc;
-          img.alt = caption;
-          container.setAttribute('data-lightbox', newSrc);
-          container.setAttribute('data-caption', caption);
-          img.style.opacity = '1';
-        }, 100);
-      }
+  // 生成圆点指示器
+  if (dotsContainer) {
+    dotsContainer.innerHTML = '';
+    slides.forEach((_, idx) => {
+      const dot = document.createElement('button');
+      dot.className = `carousel-dot ${idx === 0 ? 'active' : ''}`;
+      dot.setAttribute('aria-label', `切换到第 ${idx + 1} 张截图`);
+      dot.addEventListener('click', (e) => {
+        e.stopPropagation();
+        goToSlide(idx);
+        startAutoPlay();
+      });
+      dotsContainer.appendChild(dot);
     });
+  }
+
+  const dots = document.querySelectorAll('.carousel-dot');
+
+  function goToSlide(index) {
+    slides[currentIndex]?.classList.remove('active');
+    dots[currentIndex]?.classList.remove('active');
+
+    currentIndex = (index + slides.length) % slides.length;
+
+    slides[currentIndex]?.classList.add('active');
+    dots[currentIndex]?.classList.add('active');
+  }
+
+  function nextSlide() {
+    goToSlide(currentIndex + 1);
+  }
+
+  function prevSlide() {
+    goToSlide(currentIndex - 1);
+  }
+
+  function startAutoPlay() {
+    stopAutoPlay();
+    timer = setInterval(nextSlide, INTERVAL_TIME);
+  }
+
+  function stopAutoPlay() {
+    if (timer) {
+      clearInterval(timer);
+      timer = null;
+    }
+  }
+
+  prevBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    prevSlide();
+    startAutoPlay();
   });
+
+  nextBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    nextSlide();
+    startAutoPlay();
+  });
+
+  // 鼠标悬停时暂停轮播，移开时恢复
+  carousel.addEventListener('mouseenter', stopAutoPlay);
+  carousel.addEventListener('mouseleave', startAutoPlay);
+
+  startAutoPlay();
 }
 
 /**

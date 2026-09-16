@@ -713,131 +713,58 @@ ul {
 }
 
 /* ==========================================================================
-   Showcase Window (Studio Terminal Mockup with Real WebP Screenshots)
+   Hero Screenshot Carousel (Native aspect ratio & Auto-play)
    ========================================================================== */
-.hero-showcase-window {
+.hero-carousel-container {
   width: 100%;
   max-width: 1060px;
-  background: var(--bg-surface);
-  border: 1px solid var(--line-highlight);
+  margin: 0 auto;
+  position: relative;
+  text-align: left;
+}
+
+.carousel-track-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
   border-radius: var(--radius-card-lg);
   box-shadow: var(--shadow-window);
-  overflow: hidden;
-  text-align: left;
-  position: relative;
-  transition: all var(--transition-smooth);
-}
-
-.hero-showcase-window .window-header {
-  height: auto;
-  min-height: 48px;
-  background: var(--bg-window-header);
-  border-bottom: 1px solid var(--line);
-  padding: 10px 18px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.mac-controls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.ctrl-dot {
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-}
-
-.dot-red { background-color: #ff5f56; }
-.dot-yellow { background-color: #ffbd2e; }
-.dot-green { background-color: #27c93f; }
-
-.window-title-bar {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: var(--text);
-}
-
-.win-logo-mini {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-}
-
-.hero-view-tabs {
-  display: flex;
-  align-items: center;
-  gap: 4px;
   background: var(--bg-surface);
-  padding: 3px;
-  border-radius: var(--radius-pill);
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-highlight);
 }
 
-.hero-tab-btn {
-  font-size: 0.76rem;
-  font-weight: 700;
-  padding: 5px 12px;
-  border-radius: var(--radius-pill);
-  color: var(--text-secondary);
-  transition: all var(--transition-fast);
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.hero-tab-btn:hover {
-  color: var(--text);
-}
-
-.hero-tab-btn.active {
-  background: var(--accent);
-  color: var(--accent-ink);
-  box-shadow: 0 2px 8px rgba(196, 124, 32, 0.3);
-}
-
-.window-screen-container {
+.carousel-slide {
+  display: none;
   position: relative;
   width: 100%;
   cursor: zoom-in;
   overflow: hidden;
-  background: var(--bg-terminal);
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
 }
 
-.hero-product-screenshot {
+.carousel-slide.active {
   display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  transition: transform 0.4s ease, opacity 0.25s ease;
-}
-
-.window-screen-container:hover .hero-product-screenshot {
-  transform: scale(1.015);
-}
-
-.screenshot-overlay-hint {
-  position: absolute;
-  bottom: 16px;
-  right: 16px;
-  pointer-events: none;
-  opacity: 0.85;
-  transition: opacity var(--transition-fast);
-}
-
-.window-screen-container:hover .screenshot-overlay-hint {
   opacity: 1;
 }
 
-.hint-badge {
+.carousel-slide img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+  transition: transform 0.4s ease;
+}
+
+.carousel-slide:hover img {
+  transform: scale(1.012);
+}
+
+.carousel-slide-title {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -846,11 +773,72 @@ ul {
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: var(--radius-pill);
   color: #fff;
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.78rem;
+  font-weight: 700;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+}
+
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.carousel-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  border: 1px solid var(--line);
+  color: var(--text-secondary);
+  cursor: pointer;
+  box-shadow: var(--shadow-subtle);
+  transition: all var(--transition-fast);
+}
+
+.carousel-arrow svg {
+  width: 16px;
+  height: 16px;
+}
+
+.carousel-arrow:hover {
+  color: var(--accent);
+  border-color: var(--accent-border);
+  transform: scale(1.08);
+  box-shadow: var(--shadow-card);
+}
+
+.carousel-dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--line-highlight);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.carousel-dot:hover {
+  background: var(--accent-border);
+}
+
+.carousel-dot.active {
+  width: 24px;
+  background: var(--accent);
+  box-shadow: 0 0 8px rgba(196, 124, 32, 0.4);
 }
 
 /* ==========================================================================
@@ -1626,32 +1614,20 @@ section {
 .btn-channel-github {
   background: var(--accent);
   color: var(--accent-ink);
-  box-shadow: 0 2px 12px rgba(196, 124, 32, 0.3);
+  box-shadow: 0 4px 16px rgba(196, 124, 32, 0.35);
+  width: 100%;
 }
 
 .btn-channel-github:hover {
   background: var(--accent-hover);
-  box-shadow: var(--accent-glow);
-  transform: translateY(-1px);
+  box-shadow: var(--accent-glow), 0 6px 20px rgba(196, 124, 32, 0.4);
+  transform: translateY(-2px);
 }
 
 .btn-channel-github svg {
   width: 18px;
   height: 18px;
   fill: var(--accent-ink);
-}
-
-.btn-channel-mirror {
-  background: var(--bg-surface);
-  border: 1px solid var(--line);
-  color: var(--text);
-  box-shadow: var(--shadow-subtle);
-}
-
-.btn-channel-mirror:hover {
-  background: var(--bg-card-hover);
-  border-color: var(--line-highlight);
-  transform: translateY(-1px);
 }
 
 .install-tips-box {
@@ -2260,10 +2236,11 @@ section {
   .mobile-menu-toggle {
     display: flex;
   }
-  .hero-view-tabs {
-    overflow-x: auto;
-    max-width: 100%;
-    justify-content: flex-start;
+  .carousel-slide-title {
+    font-size: 0.72rem;
+    padding: 4px 10px;
+    bottom: 10px;
+    left: 10px;
   }
   .bento-grid {
     grid-template-columns: 1fr;
@@ -2328,13 +2305,8 @@ section {
   .connectors-grid {
     grid-template-columns: 1fr;
   }
-  .hero-view-tabs {
-    gap: 2px;
-    padding: 2px;
-  }
-  .hero-tab-btn {
-    padding: 4px 8px;
-    font-size: 0.72rem;
+  .carousel-slide-title {
+    display: none;
   }
   .source-code-block {
     flex-direction: column;

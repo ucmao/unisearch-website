@@ -7,13 +7,6 @@ window.SITE_CONFIG = {
   githubRepo: 'https://github.com/ucmao/unisearch',
   githubReleases: 'https://github.com/ucmao/unisearch/releases',
 
-  // 百度网盘镜像配置（若镜像失效，设置 enabled: false 可自动关闭网盘通道）
-  baiduMirror: {
-    enabled: true,
-    url: 'https://pan.baidu.com/s/18S2vmNB0XbpVR7jUuhPA3A?pwd=8888',
-    pwd: '8888'
-  },
-
   // 开发者源码一键启动指令
   cloneCommand: 'git clone https://github.com/ucmao/unisearch.git && cd unisearch && npm install && npm --prefix webui install && npm run webui:build && npm run electron:dev'
 };

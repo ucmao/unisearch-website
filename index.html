@@ -201,33 +201,52 @@
           </div>
         </div>
 
-        <!-- 产品界面窗口预览 (搭载真实实机截图与多视角切换) -->
-        <div class="hero-showcase-window">
-          <div class="window-header">
-            <div class="mac-controls">
-              <span class="ctrl-dot dot-red"></span>
-              <span class="ctrl-dot dot-yellow"></span>
-              <span class="ctrl-dot dot-green"></span>
+        <!-- 产品实机原图自动轮播展示 (Auto-play Carousel) -->
+        <div class="hero-carousel-container" id="heroCarousel">
+          <div class="carousel-track-wrapper">
+            <div class="carousel-slide active" data-lightbox="./assets/screenshots/03_workbench_panel.webp" data-caption="32+ 平台并发采集大盘实机原图">
+              <img src="./assets/screenshots/03_workbench_panel.webp" alt="32+ 平台并发采集大盘" width="1600" height="1140" decoding="async" fetchpriority="high">
+              <div class="carousel-slide-title">🌐 32+ 平台并发采集大盘</div>
             </div>
-            <div class="window-title-bar">
-              <img src="./assets/icon-circle.png" alt="" class="win-logo-mini">
-              <span>UniSearch Studio · AI 深度调研桌面工作台</span>
+            <div class="carousel-slide" data-lightbox="./assets/screenshots/05_report_result.webp" data-caption="AI 深度调研研报正文与逐句证据溯源">
+              <img src="./assets/screenshots/05_report_result.webp" alt="AI 深度调研研报正文" width="1600" height="1140" decoding="async" loading="lazy">
+              <div class="carousel-slide-title">📊 AI 深度调研研报正文</div>
             </div>
-            <div class="hero-view-tabs" id="heroViewTabs">
-              <button class="hero-tab-btn active" data-img="./assets/screenshots/03_workbench_panel.webp" data-caption="32+ 平台并发采集大盘实机截图">🌐 采集大盘</button>
-              <button class="hero-tab-btn" data-img="./assets/screenshots/05_report_result.webp" data-caption="AI 深度调研研报与事实溯源">📊 研报结果</button>
-              <button class="hero-tab-btn" data-img="./assets/screenshots/06_knowledge_graph.webp" data-caption="交互式实体关系知识图谱">🕸️ 知识图谱</button>
-              <button class="hero-tab-btn" data-img="./assets/screenshots/01_home_pet.webp" data-caption="极简首页与桌面伴侣互动">🐾 桌面伴侣</button>
+            <div class="carousel-slide" data-lightbox="./assets/screenshots/06_knowledge_graph.webp" data-caption="交互式知识图谱与实体拓扑">
+              <img src="./assets/screenshots/06_knowledge_graph.webp" alt="交互式知识图谱与实体拓扑" width="1600" height="1140" decoding="async" loading="lazy">
+              <div class="carousel-slide-title">🕸️ 交互式知识图谱与实体拓扑</div>
+            </div>
+            <div class="carousel-slide" data-lightbox="./assets/screenshots/07_data_pivot.webp" data-caption="多维数据透视表与导出">
+              <img src="./assets/screenshots/07_data_pivot.webp" alt="多维数据透视表与导出" width="1600" height="1140" decoding="async" loading="lazy">
+              <div class="carousel-slide-title">📑 多维数据透视表与 Excel 导出</div>
+            </div>
+            <div class="carousel-slide" data-lightbox="./assets/screenshots/09_report_versions.webp" data-caption="版本化研报库与质量门禁">
+              <img src="./assets/screenshots/09_report_versions.webp" alt="版本化研报库与质量门禁" width="1600" height="1140" decoding="async" loading="lazy">
+              <div class="carousel-slide-title">📑 版本化研报库与质量门禁</div>
+            </div>
+            <div class="carousel-slide" data-lightbox="./assets/screenshots/01_home_pet.webp" data-caption="极简首页与桌面伴侣互动">
+              <img src="./assets/screenshots/01_home_pet.webp" alt="极简首页与桌面伴侣互动" width="1600" height="1140" decoding="async" loading="lazy">
+              <div class="carousel-slide-title">🐾 极简首页与桌面伴侣互动</div>
+            </div>
+            <div class="carousel-slide" data-lightbox="./assets/screenshots/02_at_mention_menu.webp" data-caption="13+ 场景技能 @ 快捷调度">
+              <img src="./assets/screenshots/02_at_mention_menu.webp" alt="13+ 场景技能 @ 快捷调度" width="1600" height="1140" decoding="async" loading="lazy">
+              <div class="carousel-slide-title">🎯 13+ 场景技能（@ 快捷调度）</div>
+            </div>
+            <div class="carousel-slide" data-lightbox="./assets/screenshots/08_settings_retrieval.webp" data-caption="纯本地向量与模型配置">
+              <img src="./assets/screenshots/08_settings_retrieval.webp" alt="纯本地向量与模型配置" width="1600" height="1140" decoding="async" loading="lazy">
+              <div class="carousel-slide-title">🔒 纯本地向量与模型配置</div>
             </div>
           </div>
 
-          <div class="window-screen-container" id="heroScreenContainer" data-lightbox="./assets/screenshots/03_workbench_panel.webp">
-            <img class="hero-product-screenshot" id="heroProductImg" src="./assets/screenshots/03_workbench_panel.webp"
-              alt="UniSearch 真实产品界面：32+ 平台并发采集大盘" width="1280" height="720" decoding="async"
-              fetchpriority="high">
-            <div class="screenshot-overlay-hint">
-              <span class="hint-badge">🔍 点击全屏预览高清实机细节</span>
-            </div>
+          <!-- 轮播指示器与控制器 -->
+          <div class="carousel-controls">
+            <button class="carousel-arrow carousel-prev" id="carouselPrevBtn" aria-label="上一张">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <div class="carousel-dots" id="carouselDots"></div>
+            <button class="carousel-arrow carousel-next" id="carouselNextBtn" aria-label="下一张">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
           </div>
         </div>
 
@@ -1002,18 +1021,12 @@
 
               <div class="download-action-list">
                 <a href="https://github.com/ucmao/unisearch/releases" target="_blank" rel="noopener"
-                  class="btn-download-channel btn-channel-github">
+                  class="btn-download-channel btn-channel-github btn-channel-primary">
                   <svg viewBox="0 0 16 16" fill="currentColor">
                     <path
                       d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
                   </svg>
-                  <span>GitHub Releases 官方下载 (.dmg)</span>
-                </a>
-
-                <a href="https://pan.baidu.com/s/18S2vmNB0XbpVR7jUuhPA3A?pwd=8888" target="_blank" rel="noopener"
-                  class="btn-download-channel btn-channel-mirror">
-                  <span class="mirror-icon">🚀</span>
-                  <span>百度网盘镜像下载 (提取码: 8888)</span>
+                  <span>前往 GitHub Releases 下载 macOS 安装包 (.dmg)</span>
                 </a>
               </div>
 
@@ -1057,18 +1070,12 @@
 
               <div class="download-action-list">
                 <a href="https://github.com/ucmao/unisearch/releases" target="_blank" rel="noopener"
-                  class="btn-download-channel btn-channel-github">
+                  class="btn-download-channel btn-channel-github btn-channel-primary">
                   <svg viewBox="0 0 16 16" fill="currentColor">
                     <path
                       d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
                   </svg>
-                  <span>GitHub Releases 官方下载 (.exe / .zip)</span>
-                </a>
-
-                <a href="https://pan.baidu.com/s/18S2vmNB0XbpVR7jUuhPA3A?pwd=8888" target="_blank" rel="noopener"
-                  class="btn-download-channel btn-channel-mirror">
-                  <span class="mirror-icon">🚀</span>
-                  <span>百度网盘镜像下载 (提取码: 8888)</span>
+                  <span>前往 GitHub Releases 下载 Windows 安装包 (.exe / .zip)</span>
                 </a>
               </div>
 
@@ -1248,9 +1255,7 @@
           <ul class="footer-links">
             <li><a href="#download-mac">macOS 版 (.dmg)</a></li>
             <li><a href="#download-win">Windows 版 (.exe)</a></li>
-            <li><a href="https://github.com/ucmao/unisearch/releases" target="_blank" rel="noopener">Release 发版历史</a>
-            </li>
-            <li><a href="#download">国内镜像下载</a></li>
+            <li><a href="https://github.com/ucmao/unisearch" target="_blank" rel="noopener">⭐ 在 GitHub 上 Star</a></li>
           </ul>
         </div>
 
